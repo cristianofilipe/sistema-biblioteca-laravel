@@ -20,9 +20,6 @@ return new class extends Migration
             // Definindo as chaves estrangeiras
             $table->foreign('professor_id')->references('id_professor')->on('professors')->onDelete('cascade');
             $table->foreign('curso_id')->references('id_curso')->on('cursos')->onDelete('cascade');
-
-            // Definindo uma chave primária composta
-            $table->primary(['professor_id', 'curso_id']);
         });
     }
 
