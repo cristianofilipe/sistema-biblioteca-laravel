@@ -11,6 +11,11 @@ class Pessoa extends Model
 
     protected $primaryKey = 'id_pessoa';
 
+    public function emprestimos()
+    {
+        return $this->hasMany(Emprestimo::class, 'pessoa_id');
+    }
+
     public function telefones()
     {
         //uma pessoa pode ter varios telefones

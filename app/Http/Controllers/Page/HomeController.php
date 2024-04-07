@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Aluno;
 use App\Models\Curso;
 use App\Models\Pessoa;
 use App\Models\Professor;
@@ -13,6 +14,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('pages/home');
+        $alunos = Aluno::with('pessoa', 'curso')->get();
+    
+        return view('pages/home', ['alunos' => $alunos]);
     }
 }

@@ -11,13 +11,14 @@ class Consulta extends Model
 
     protected $primaryKey = 'id_consultas';
 
-    public function materiais()
+    public function material()
     {
-        return $this->belongsToMany(Material::class, 'material_id');
+        return $this->belongsTo(Material::class);
     }
 
-    public function pessoas()
+    public function pessoa()
     {
-        return $this->belongsToMany(Pessoa::class, 'pessoas', );
+        return $this->belongsTo(Pessoa::class);
     }
+
 }

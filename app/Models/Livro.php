@@ -16,4 +16,9 @@ class Livro extends Model
         return $this->belongsTo(Material::class);
     }
 
+    public function autores()
+    {
+        return $this->belongsToMany(Autor::class);
+    }
+
 }

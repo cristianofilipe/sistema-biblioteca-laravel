@@ -16,6 +16,11 @@ class Material extends Model
         return $this->hasMany(Consulta::class, 'material_id');
     }
 
+    public function emprestimos()
+    {
+        return $this->hasMany(Emprestimo::class, 'material_id');
+    }
+
     public function livro()
     {
         return $this->hasOne(Livro::class, 'material_id');
@@ -23,17 +28,22 @@ class Material extends Model
 
     public function revista()
     {
-        return $this->hasMany(Revista::class, 'material_id');
+        return $this->hasOne(Revista::class, 'material_id');
     }
 
     public function tcc()
     {
-        return $this->hasMany(TCC::class, 'material_id');
+        return $this->hasOne(TCC::class, 'material_id');
     }
 
     public function cd()
     {
-        return $this->hasMany(CD::class, 'material_id');
+        return $this->hasOne(CD::class, 'material_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(usuario::class);
     }
 
 }

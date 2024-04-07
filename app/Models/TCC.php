@@ -15,4 +15,14 @@ class TCC extends Model
     {
         return $this->belongsTo(Material::class);
     }
+
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class);
+    }
+
+    public function alunos()
+    {
+        return $this->hasMany(Aluno::class);
+    }
 }

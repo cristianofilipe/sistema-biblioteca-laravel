@@ -21,4 +21,9 @@ class Curso extends Model
     {
         return $this->belongsToMany(Professor::class, 'curso_professor', 'curso_id', 'professor_id');
     }
+
+    public function tccs()
+    {
+        return $this->hasMany(TCC::class, 'curso_id');
+    }
 }

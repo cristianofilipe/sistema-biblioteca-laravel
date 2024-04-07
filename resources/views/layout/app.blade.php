@@ -29,5 +29,7 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="{{ asset('/js/home-script.js') }}"></script>
 </body>
 </html>

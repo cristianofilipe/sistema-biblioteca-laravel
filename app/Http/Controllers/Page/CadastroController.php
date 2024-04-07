@@ -31,4 +31,9 @@ class CadastroController extends Controller
     {
         return view('pages/cadastro/cd');
     }
+
+    public function aluno()
+    {
+        return view('pages/cadastro/aluno');
+    }
 }

@@ -14,12 +14,17 @@ class Aluno extends Model
     public function pessoa()
     {
         //um aluno pertence a uma unica pessoa
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 
     public function curso()
     {
         //um aluno pertence a um unico curso
-        return $this->belongsTo(Curso::class);
+        return $this->belongsTo(Curso::class, 'curso_id');
+    }
+
+    public function tcc()
+    {
+        return $this->belongsTo(TCC::class);
     }
 }
