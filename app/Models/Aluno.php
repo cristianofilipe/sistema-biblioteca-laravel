@@ -11,6 +11,13 @@ class Aluno extends Model
 
     protected $primaryKey = 'id_aluno';
 
+    protected $fillable = [
+        'classe',
+        'turma',
+        'curso_id',
+        'pessoa_id'
+    ];
+
     public function pessoa()
     {
         //um aluno pertence a uma unica pessoa

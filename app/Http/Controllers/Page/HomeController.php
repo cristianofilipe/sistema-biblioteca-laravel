@@ -14,8 +14,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $alunos = Aluno::with('pessoa', 'curso')->get();
-    
-        return view('pages/home', ['alunos' => $alunos]);
+        return view('pages/home');
     }
 }

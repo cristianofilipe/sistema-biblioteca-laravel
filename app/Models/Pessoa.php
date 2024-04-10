@@ -11,6 +11,11 @@ class Pessoa extends Model
 
     protected $primaryKey = 'id_pessoa';
 
+    protected $fillable = [
+        'nome',
+        'sexo'
+    ];
+
     public function emprestimos()
     {
         return $this->hasMany(Emprestimo::class, 'pessoa_id');

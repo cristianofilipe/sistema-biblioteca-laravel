@@ -11,6 +11,17 @@ class Livro extends Model
 
     protected $primaryKey = 'id_livro';
 
+    protected $fillable = [
+        'titulo',
+        'volume',
+        'ano_publicacao',
+        'edicao',
+        'isbn',
+        'editora',
+        'cdd',
+        'material_id'
+    ];
+
     public function material()
     {
         return $this->belongsTo(Material::class);

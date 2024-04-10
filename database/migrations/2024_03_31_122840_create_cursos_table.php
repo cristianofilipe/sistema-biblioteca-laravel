@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cursos', function (Blueprint $table) {
             $table->id('id_curso');
-            $table->enum('nome', ['informatica', 'bioquimica', 'electricidade', 'mecanica', 'desenhador projectista']);
+            $table->enum('nome', ['informatica', 'bioquimica', 'electricidade', 'mecanica', 'desenhador projectista', 'ensino geral']);
             $table->timestamps();
         });
     }

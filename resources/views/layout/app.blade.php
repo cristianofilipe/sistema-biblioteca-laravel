@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('/css/layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 </head>
 <body>
     <div class="layout">
@@ -18,7 +18,7 @@
             <ul>
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('cadastro-index') }}">Cadastro</a></li>
-                <li><a href="{{ route('consulta-index') }}">Consulta</a></li>
+                <li><a href="{{ route('listagem-index') }}">Consulta</a></li>
                 <li><a href="{{ route('emprestimos') }}">Emprestimos</a></li>
                 <li><a href="{{ route('relatorios') }}">Relatorios</a></li>
             </ul>
@@ -30,6 +30,6 @@
         </main>
     </div>
 
-    <script src="{{ asset('/js/home-script.js') }}"></script>
+    <script src="{{ asset('/js/script.js') }}"></script>
 </body>
 </html>

@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
+use App\Models\CD;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class LivroController extends Controller
+class CdController extends Controller
 {
     /**
-     * Metodo responsavel por exibir um aluno
-     * @param int $id => id do aluno a ser exibido
+     * Metodo responsavel por exibir um cd
+     * @param int $id => id do cd a ser exibido
      */
     public function show(int $id)
     {
-        
+        $cd = CD::with('material')->find($id);
+
+        return view('pages/listagem/cd-show', ['cd' => $cd]);
     }
 
     /**
-     * Metodo responsavel por cadastrar novo aluno
+     * Metodo responsavel por cadastrar um novo cd
      * @param StoreUpdateAlunoFormRequest $request => dados a virem do formulario
      */
     public function store()

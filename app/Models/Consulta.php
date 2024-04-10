@@ -11,6 +11,12 @@ class Consulta extends Model
 
     protected $primaryKey = 'id_consultas';
 
+    protected $fillable = [
+        'data_consulta',
+        'pessoa_id',
+        'material_id'
+    ];
+
     public function material()
     {
         return $this->belongsTo(Material::class);

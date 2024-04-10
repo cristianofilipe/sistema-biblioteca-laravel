@@ -11,9 +11,15 @@ class Revista extends Model
 
     protected $primaryKey = 'id_revista';
 
+    protected $fillable = [
+        'titulo',
+        'subtitulo',
+        'material_id'
+    ];
+
     public function material() 
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 
 }

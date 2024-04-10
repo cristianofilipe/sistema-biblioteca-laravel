@@ -11,6 +11,10 @@ class Curso extends Model
 
     protected $primaryKey = 'id_curso';
 
+    protected $fillable = [
+        'nome'
+    ];
+
     public function alunos()
     {
         //um curso pode ter varios alunos associados

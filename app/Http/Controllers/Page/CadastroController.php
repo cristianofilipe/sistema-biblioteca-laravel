@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Curso;
 use Illuminate\Http\Request;
 
 class CadastroController extends Controller
@@ -24,7 +25,8 @@ class CadastroController extends Controller
 
     public function tcc()
     {
-        return view('pages/cadastro/tcc');
+        $cursos = Curso::all();
+        return view('pages/cadastro/tcc', ['cursos' => $cursos]);
     }
 
     public function cd()
@@ -34,6 +36,13 @@ class CadastroController extends Controller
 
     public function aluno()
     {
-        return view('pages/cadastro/aluno');
+        $cursos = Curso::all();
+        return view('pages/cadastro/aluno', compact('cursos'));
+    }
+
+    public function professor()
+    {
+        $cursos = Curso::all(['id_curso','nome']);
+        return view('pages/cadastro/professor', compact('cursos'));
     }
 }

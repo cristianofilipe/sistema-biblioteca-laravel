@@ -12,9 +12,13 @@ class Professor extends Model
 
     protected $primaryKey = 'id_professor';
 
+    protected $fillable = [
+        'email'
+    ];
+
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 
     public function cursos()

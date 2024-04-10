@@ -9,6 +9,14 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'data_entrada',
+        'tipo_material',
+        'modo_aquisicao',
+        'qtd_material',
+        'usuario_id'
+    ];
+
     protected $primaryKey = 'id_material';
 
     public function consultas()

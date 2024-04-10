@@ -11,4 +11,6 @@ class EmprestimoController extends Controller
     {
         return view('pages/emprestimo');
     }
+
+    
 }

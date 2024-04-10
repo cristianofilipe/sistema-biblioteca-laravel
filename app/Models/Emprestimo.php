@@ -11,6 +11,13 @@ class Emprestimo extends Model
 
     protected $primaryKey = 'id_emprestimo';
 
+    protected $fillable = [
+        'data_devolucao',
+        'data_emprestimo',
+        'pessoa_id',
+        'material_id'
+    ];
+
     public function material()
     {
         return $this->belongsTo(Material::class);

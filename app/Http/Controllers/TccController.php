@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Livro;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class LivroController extends Controller
+class TccController extends Controller
 {
     /**
      * Metodo responsavel por exibir um aluno

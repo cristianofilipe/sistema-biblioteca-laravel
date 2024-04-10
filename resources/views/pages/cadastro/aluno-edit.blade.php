@@ -32,12 +32,20 @@
 
     Curso: 
     <select name="curso" id="curso">
-        <option value="1">Informatica</option>
-        <option value="2">Bioquimica</option>
-        <option value="3">Electricidade</option>
-        <option value="4">Desenhador Projectista</option>
-        <option value="5">Mecanica</option>
+        @foreach ($cursos as $curso)
+            <option value="{{ $curso->id_curso }}">{{ $curso->nome }}</option>
+        @endforeach
     </select><br>
+
+    <label for="telefones">Telefones:</label>
+    <div id="telefones" class="form-group mb-3">
+        <input type="text" name="tel[]" value="{{ $telefones[0]->numero }}"><br>
+        @if(empty($telefones[1]))
+            <input type="text" name="tel[]">
+        @else
+            <input type="text" name="tel[]" value="{{ $telefones[1]->numero }}">
+        @endif
+    </div>
     <button type="submit">Editar</button>
 </form>
 @endsection

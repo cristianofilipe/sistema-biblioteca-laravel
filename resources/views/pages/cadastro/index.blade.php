@@ -11,6 +11,7 @@
     <li><a href="{{ route('cadastro-tcc') }}">TCC</a></li>
     <li><a href="{{ route('cadastro-revista') }}">Revista</a></li>
     <li><a href="{{ route('cadastro-cd') }}">CD</a></li>
+    <li><a href="{{ route('cadastro-aluno') }}">Aluno</a></li>
 </ul>
 
 @endsection

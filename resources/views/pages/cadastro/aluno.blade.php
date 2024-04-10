@@ -32,15 +32,19 @@
 
     Curso: 
     <select name="curso" id="curso">
-        <option value="1">Informatica</option>
-        <option value="2">Bioquimica</option>
-        <option value="3">Electricidade</option>
-        <option value="4">Desenhador Projectista</option>
-        <option value="5">Mecanica</option>
+        @foreach ($cursos as $curso)
+            <option value="{{ $curso->id_curso }}">{{ $curso->nome }}</option>
+        @endforeach
     </select><br>
     @if ($errors->has('curso'))
         <p style="color: red">{{ $errors->first('curso') }}</p>
     @endif
+
+    <label for="telefones">Telefones:</label>
+    <div id="telefones" class="form-group mb-3">
+        <input type="tel" name="tel[]" id="" placeholder="telefone 1"><br><br>
+        <input type="tel" name="tel[]" id="" placeholder="telefone 2"><br>
+    </div>
     <button type="submit">Enviar</button>
 </form>
 

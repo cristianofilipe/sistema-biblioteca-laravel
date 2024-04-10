@@ -11,6 +11,13 @@ class Usuario extends Model
 
     protected $primaryKey = 'id_usuario';
 
+    protected $fillable = [
+        'nome',
+        'tipo_usuario',
+        'email',
+        'senha'
+    ];
+
     public function materiais()
     {
         return $this->hasMany(Material::class);
