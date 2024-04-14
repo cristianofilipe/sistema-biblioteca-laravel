@@ -16,9 +16,9 @@ class Telefone extends Model
         'pessoa_id'
     ];
 
-    public function pessoa()
+    public function usuario()
     {
         //um telefone pertence a uma pessoa
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Usuario::class);
     }
 }

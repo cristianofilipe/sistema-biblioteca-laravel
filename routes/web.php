@@ -7,11 +7,14 @@ use App\Http\Controllers\Page\CadastroController;
 use App\Http\Controllers\Page\ListagemController;
 use App\Http\Controllers\Page\EmprestimoController;
 use App\Http\Controllers\Page\HomeController;
+use App\Http\Controllers\Page\LoginController;
 use App\Http\Controllers\Page\RelatorioController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\TccController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +29,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('sistema-biblioteca')->group(function() {
-    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('home', [HomeController::class, 'index'])->middleware('auth')->name('home');
     Route::get('emprestimos', [EmprestimoController::class, 'index'])->name('emprestimos');
     Route::get('relatorios', [RelatorioController::class, 'index'])->name('relatorios');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
 
     //Rotas para cadastros
     Route::get('cadastro', [CadastroController::class, 'index'])->name('cadastro-index');
@@ -91,10 +95,6 @@ Route::prefix('sistema-biblioteca')->group(function() {
     Route::post('/tcc', [TccController::class, 'store'])->name('tcc-store');
     Route::put('/tcc/{id}', [TccController::class, 'update'])->name('tcc-update');
     Route::delete('/tcc/{id}', [TccController::class, 'destroy'])->name('tcc-destroy');
-
-    Route::get('/teste', function(Request $request) {
-        dd($request);
-    })->name('tcc-teste');
 
 });
 

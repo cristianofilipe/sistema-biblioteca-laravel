@@ -18,10 +18,10 @@ class Aluno extends Model
         'pessoa_id'
     ];
 
-    public function pessoa()
+    public function usuario()
     {
         //um aluno pertence a uma unica pessoa
-        return $this->belongsTo(Pessoa::class, 'pessoa_id');
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     public function curso()

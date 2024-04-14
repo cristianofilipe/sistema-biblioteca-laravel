@@ -49,9 +49,9 @@ class Material extends Model
         return $this->hasOne(CD::class, 'material_id');
     }
 
-    public function usuario()
+    public function administrador()
     {
-        return $this->belongsTo(usuario::class);
+        return $this->belongsTo(Administrador::class);
     }
 
 }

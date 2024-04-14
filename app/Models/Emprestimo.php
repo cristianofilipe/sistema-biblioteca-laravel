@@ -23,8 +23,8 @@ class Emprestimo extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function pessoa()
+    public function usuario()
     {
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Usuario::class);
     }
 }

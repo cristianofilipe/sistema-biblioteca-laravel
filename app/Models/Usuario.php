@@ -13,13 +13,33 @@ class Usuario extends Model
 
     protected $fillable = [
         'nome',
-        'tipo_usuario',
-        'email',
-        'senha'
+        'sexo'
     ];
 
-    public function materiais()
+    public function emprestimos()
     {
-        return $this->hasMany(Material::class);
+        return $this->hasMany(Emprestimo::class, 'pessoa_id');
+    }
+
+    public function telefones()
+    {
+        //uma pessoa pode ter varios telefones
+        return $this->hasMany(Telefone::class, 'pessoa_id');
+    }
+
+    public function aluno()
+    {
+        //uma pessoa tem um unico aluno associado
+        return $this->hasOne(Aluno::class, 'pessoa_id');
+    }
+
+    public function consultas()
+    {
+        return $this->hasMany(Consulta::class, 'pessoa_id');
+    }
+
+    public function professor()
+    {
+        return $this->hasOne(Professor::class, 'pessoa_id');
     }
 }

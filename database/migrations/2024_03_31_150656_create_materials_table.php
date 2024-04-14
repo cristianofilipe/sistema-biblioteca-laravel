@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('tipo_material', ['livro', 'revista', 'tcc', 'cd']);
             $table->enum('modo_aquisicao', ['comprado', 'doado', 'ofertado']);
             $table->integer('qtd_material');
+            $table->integer('estante')->nullable();
             $table->timestamps();
         });
     }
