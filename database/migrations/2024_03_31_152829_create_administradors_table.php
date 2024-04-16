@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('administradors', function (Blueprint $table) {
             $table->id('id_adm');
-            $table->string('nome');
-            $table->enum('tipo_adm', ['admin', 'co-admin']);
+            $table->string('name');
             $table->string('email')->unique();
-            $table->text('senha');
+            $table->enum('tipo_adm', ['admin', 'co-admin']);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

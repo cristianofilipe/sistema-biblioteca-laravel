@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,4 +28,19 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function prepareException(Throwable $e)
+{
+    if ($e instanceof HttpException && $e->getStatusCode() == 404) {
+        // Deixe o Laravel lidar com o redirecionamento automaticamente
+        return $e;
+    }
+
+    if ($e instanceof HttpException && $e->getStatusCode() == 403) {
+        // Deixe o Laravel lidar com o redirecionamento automaticamente
+        return $e;
+    }
+
+    return parent::prepareException($e);
+}
 }

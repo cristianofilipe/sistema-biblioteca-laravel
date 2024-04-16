@@ -37,7 +37,7 @@ class RevistaController extends Controller
         $material->tipo_material = 'revista';
         $material->modo_aquisicao = $request->modo_aquisicao;
         $material->qtd_material = $request->qtd_material;
-        $material->usuario_id = 1;
+        $material->adm_id = 1;
         $material->save();
 
         $revista->titulo = $request->titulo;

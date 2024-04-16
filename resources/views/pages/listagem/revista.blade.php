@@ -32,9 +32,12 @@
                         <td><a href="{{ route('revista-show', $revista->id_revista) }}" class="btn btn-primary">Ver mais</a></td>
                         <td><a href="{{ route('revista-edit', $revista->id_revista) }}" class="btn btn-success" role="button">Editar</a></td>
                         <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $revista->id_revista }}">
-                                Deletar
-                            </button>
+                            @can('adm-master')
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $revista->id_revista }}">
+                                    Deletar
+                                </button>
+                            @endcan
+                            
                         </td>
                     </tr>
 
