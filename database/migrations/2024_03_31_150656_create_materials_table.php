@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id('id_material');
             $table->date('data_entrada');
             $table->enum('tipo_material', ['livro', 'revista', 'tcc', 'cd']);
-            $table->enum('modo_aquisicao', ['comprado', 'doado', 'ofertado']);
-            $table->integer('qtd_material');
+            $table->enum('modo_aquisicao', ['comprado', 'doado', 'ofertado'])->nullable();
+            $table->integer('qtd_material')->nullable();
             $table->integer('estante')->nullable();
+            $table->boolean('ativo')->nullable();
             $table->timestamps();
         });
     }

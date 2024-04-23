@@ -4,7 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Models\Administrador;
+use App\Models\Usuario;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 
@@ -24,8 +24,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        FacadesGate::define('acesso-autorizado', function(Administrador $adm) {
-            return $adm->tipo_adm === 'admin';
+        FacadesGate::define('acesso-autorizado', function(Usuario $usuario) {
+            return $usuario->tipo_usuario === 'admin';
         });
     }
 }

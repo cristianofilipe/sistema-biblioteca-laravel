@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TccFormRequest;
+use App\Models\Material;
+use App\Models\TCC;
 use Illuminate\Http\Request;
 
 class TccController extends Controller
@@ -17,10 +20,29 @@ class TccController extends Controller
 
     /**
      * Metodo responsavel por cadastrar novo aluno
-     * @param StoreUpdateAlunoFormRequest $request => dados a virem do formulario
+     * @param TccFormRequest $request => dados a virem do formulario
      */
-    public function store()
+    public function store(TccFormRequest $request)
     {
+        $tcc = new TCC();
+        $material = new Material();
+
+        $material->data_entrada = $request->data_entrada;
+        $material->estante = $request->estante;
+        $material->save();
+
+        $tcc->tema = $request->tema;
+        $tcc->orientador = $request->orientador;
+        
+        foreach($request->autores as $autor) {
+            if(!is_null($autor)) {
+                $tcc->autores()->create(['nome' => $autor]);
+            }
+        }
+
+        $tcc->save();
+
+        return redirect()->route('listagem-tcc');
         
     }
 

@@ -26,7 +26,8 @@ class RevistaFormRequest extends FormRequest
             'subtitulo' => ['min:5', "regex:/^[0-9a-zA-ZÀ-ÿ']+([\s][0-9a-zA-ZÀ-ÿ']+)*$/"],
             'modo_aquisicao' => ['required', "regex:/^[a-zA-Z]+$/"],
             'qtd_material' => ['required', "regex:/^[0-9]+$/"],
-            'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"]
+            'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"],
+            'estante' => ['required', 'regex:/^[0-9]+$/']
         ];
         
     }
@@ -48,7 +49,10 @@ class RevistaFormRequest extends FormRequest
             'qtd_material.regex' => 'Quantidade de material invalida',
 
             'data_entrada.required' => 'Data de entrada eh obrigatorio',
-            'data_entrada.regex' => 'Data invalida'
+            'data_entrada.regex' => 'Data invalida',
+
+            'estante.required' => 'A estante eh obrigatoria',
+            'estante.regex' => 'Estante invalida'
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RevistaFormRequest;
 use App\Models\Material;
 use App\Models\Revista;
+use Illuminate\Support\Facades\Auth;
 
 class RevistaController extends Controller
 {
@@ -37,7 +38,11 @@ class RevistaController extends Controller
         $material->tipo_material = 'revista';
         $material->modo_aquisicao = $request->modo_aquisicao;
         $material->qtd_material = $request->qtd_material;
-        $material->adm_id = 1;
+        $material->usuario_id = Auth::user()->id_usuario;
+
+        //se a quantidade de revistas for maior que 2, entao o livro esta ativo
+        $material->ativo = ($material->qtd_material > 2) ?? false;
+        $material->estante = $request->estante;
         $material->save();
 
         $revista->titulo = $request->titulo;

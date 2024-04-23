@@ -30,6 +30,6 @@ class TCC extends Model
 
     public function autores()
     {
-        return $this->hasMany(Autor::class, 'autor_id');
+        return $this->hasMany(AutorTcc::class, 'tcc_id');
     }
 }

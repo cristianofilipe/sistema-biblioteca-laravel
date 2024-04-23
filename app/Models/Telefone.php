@@ -13,12 +13,12 @@ class Telefone extends Model
 
     protected $fillable = [
         'numero',
-        'pessoa_id'
+        'visitante_id'
     ];
 
-    public function usuario()
+    public function visitante()
     {
         //um telefone pertence a uma pessoa
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Visitante::class);
     }
 }

@@ -38,6 +38,12 @@
     @if ($errors->has('data_entrada'))
         <p style="color: red">{{ $errors->first('data_entrada') }}</p>
     @endif
+
+    Estante <input type="number" name="estante" id="estante" value="{{ $revista->material->estante }}">
+    @if ($errors->has('estante'))
+        <p style="color: red">{{ $errors->first('estante') }}</p>
+    @endif
+    <br>
     
     <button type="submit">Editar</button>
 </form>

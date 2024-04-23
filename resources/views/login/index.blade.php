@@ -15,7 +15,7 @@
                 <p>{{ session()->get('erro') }}</p>
             @endif
             @csrf
-            <img src="{{ asset('/img/images-Photoroom.png-Photoroom.png') }}" alt="" class="logo">
+            <img src="{{ asset('/img/ipddf-logo.png') }}" alt="" class="logo">
             <span class="slogan">"Criados para educar, formados para servir"</span>
             <div class="input-group">
                 <span class="fa fa-envelope"></span>
@@ -27,6 +27,7 @@
             <div class="input-group">
                 <span class="fa fa-lock"></span>
                 <input type="password" placeholder="Senha" name="password">
+                
                 @if ($errors->has('password'))
                     <p class="mg-error">{{ $errors->first('password') }}</p>
                 @endif

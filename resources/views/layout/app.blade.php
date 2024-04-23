@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('/css/layout.css') }}">
-</head>
-<body>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="{{ asset('/icons/css/all.min.css') }}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('/css/layout.css') }}" />
+
+    @stack('styles')
+  </head>
+
+  <body>
+    <!-- =================== START OF CONTAINER =================== -->
     <div class="container">
-        <aside>
+      <!-- =================== START OF ASIDE =================== -->
+      <aside>
             <div class="top">
                 <div class="logo">
-                    <img src="img/images-Photoroom.png-Photoroom.png" alt="">
+                    <img src="{{ asset('/img/ipddf-logo.png') }}" alt="">
                     <h2>IP<span class="danger">DDF</span></h2>
                 </div>
                 <div class="close" id="close-btn">
@@ -24,7 +37,7 @@
                     <h3>Home</h3>
                 </a>
                 <div class="dropdown">
-                    <a href="#" class="dropdown" id="testee">
+                    <a class="dropdown" id="testee">
                         <i class="fa fa-plus"></i>
                         <h3>Acervo</h3>
                     </a>
@@ -35,37 +48,78 @@
                         <a href="{{ route('listagem-cd') }}">Cd</a>
                     </div>
                 </div>
-       
-                <a href="usuario.html">
-                    <i class="fa fa-users"></i>
-                    <h3>Admnistradores</h3>
-                </a>
-                <a href="#">
-                    <i class="fa fa-users"></i>
-                    <h3>Usuários</h3>
-                    <span class="message-count">26</span>
-                </a>
-                <a href="{{ route('emprestimos') }}">
-                    <i class="fa fa-handshake-o"></i>
-                    <h3>Empréstimo</h3>
-                </a>
-                <a href="{{ route('relatorios') }}">
-                    <i class="fa fa-file-text-o"></i>
-                    <h3>Relatório</h3>
-                </a>
-                <a href="{{ route('logout') }}" id="logout">
-                    <i class="fa fa-sign-out"></i>
-                    <h3>Logout</h3>
-                </a>
+
+                <div class="dropdown">
+                  <a class="dropdown" id="testee">
+                      <i class="fa-solid fa-book-open-reader"></i>
+                      <h3>Visitantes</h3>
+                  </a>
+                  <div class="dropdown-content">
+                      <a href="{{ route('listagem-alunos') }}">Alunos</a>
+                      <a href="{{ route('listagem-professores') }}">Professores</a>
+                  </div>
+              </div>
+
+              <a href="#">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <h3>Consultas</h3>
+              </a>
+
+              <a href="#">
+                  <i class="fa fa-users"></i>
+                  <h3>Usuários</h3>
+                  <span class="message-count">26</span>
+              </a>
+              <a href="{{ route('emprestimos') }}">
+                  <i class="fa fa-handshake"></i>
+                  <h3>Empréstimo</h3>
+              </a>
+              <a href="{{ route('relatorios') }}">
+                  <i class="fa fa-file-text"></i>
+                  <h3>Relatório</h3>
+              </a>
+              <a href="#" id="logout">
+                  <i class="fa fa-sign-out"></i>
+                  <h3>Logout</h3>
+              </a>
             </div>
         </aside>
-        <!-- Fim sidebar -->
+      <!-- =================== END OF ASIDE =================== -->
 
-        <main>
-            @yield('content')
-        </main>
+      <!-- =================== START OF MAIN =================== -->
+      <main>
+        @yield('content')
+      </main>
+      <!-- =================== END OF MAIN =================== -->
+
+      <!-- =================== START OF RIGHT =================== -->
+      <div class="right">
+        <!-- =================== START OF TOP =================== -->
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-icons-sharp">menu</span>
+          </button>
+          <div class="theme-toggler">
+            <span class="active material-icons-sharp">light_mode</span>
+            <span class="material-icons-sharp">dark_mode</span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <small class="text-muted">Admin</small>
+            </div>
+            <div class="profile-photo">
+                <span class="material-icons-sharp">person</span>
+            </div>
+          </div>
+        </div>
+        <!-- =================== END OF TOP =================== -->
+
+      </div>
+      <!-- =================== END OF RIGHT =================== -->
     </div>
+    <!-- =================== END OF CONTAINER =================== -->
+    <script src="{{ asset('/js/layout.js') }}"></script>
 
-    <script src="{{ asset('/js/script.js') }}"></script>
-</body>
+    @stack('scripts')
+  </body>
 </html>

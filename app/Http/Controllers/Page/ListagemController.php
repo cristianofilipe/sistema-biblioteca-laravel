@@ -26,9 +26,42 @@ class ListagemController extends Controller
     /**
      * Listagem de todas as revistas cadastradas
      */
-    public function revista()
+    public function revista(Request $request)
     {
-        $revistas = Revista::with('material')->get();
+        $query = Revista::query();
+
+        if($request->filled('id')) {
+            $query->where('id_revista', $request->id);
+        }
+
+        if($request->filled('titulo')) {
+            $query->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        if($request->filled('subtitulo')) {
+            $query->where('subtitulo', 'like', '%' . $request->subtitulo . '%');
+        }
+
+        if($request->filled('titulo')) {
+            $query->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        if ($request->filled('data_entrada')) {
+            // Se a data de entrada for fornecida, buscamos nas relações de material
+            $query->whereHas('material', function ($q) use ($request) {
+                $q->whereDate('data_entrada', $request->data_entrada);
+            });
+        }
+
+        if ($request->filled('modo_aquisicao')) {
+            // Se a data de entrada for fornecida, buscamos nas relações de material
+            $query->whereHas('material', function ($q) use ($request) {
+                $q->whereDate('modo_aquisicao', $request->modo_aquisicao);
+            });
+        }
+
+        $revistas = $query->get();
+
         return view('pages/listagem/revista', ['revistas' => $revistas]);
     }
 

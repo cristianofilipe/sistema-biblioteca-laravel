@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfessorFormRequest;
 use App\Models\Curso;
-use App\Models\Pessoa;
 use App\Models\Professor;
+use App\Models\Visitante;
 
 class ProfessorController extends Controller
 {
@@ -15,7 +15,7 @@ class ProfessorController extends Controller
      */
     public function show(int $id)
     {
-        $professor = Professor::with('pessoa.telefones', 'cursos')->find($id);
+        $professor = Professor::with('visitante.telefones', 'cursos')->find($id);
 
         return view('pages/listagem/professor-show', compact('professor'));
     }
@@ -27,21 +27,21 @@ class ProfessorController extends Controller
     public function store(ProfessorFormRequest $request)
     {
         $professor = new Professor();
-        $pessoa = new Pessoa();
+        $visitante = new Visitante();
 
-        $pessoa->nome = $request->nome;
-        $pessoa->sexo = $request->sexo;
-        $pessoa->save();
+        $visitante->nome = $request->nome;
+        $visitante->sexo = $request->sexo;
+        $visitante->save();
 
-        // Salva os telefones associados à pessoa
+        // Salva os telefones associados à visitante
         foreach($request->tel as $tel) {
             if(!is_null($tel)) {
-                $pessoa->telefones()->create(['numero' => $tel]);
+                $visitante->telefones()->create(['numero' => $tel]);
             }
         }
 
         $professor->email = $request->email;
-        $professor->pessoa_id = $pessoa->id_pessoa;
+        $professor->visitante_id = $visitante->id_visitante;
         $professor->save();
 
         // Sincroniza os cursos associados ao professor
@@ -57,7 +57,7 @@ class ProfessorController extends Controller
      */
     public function edit(int $id)
     {
-        $professor = Professor::with('pessoa.telefones', 'cursos')->find($id);
+        $professor = Professor::with('visitante.telefones', 'cursos')->find($id);
         $cursos = Curso::all();
 
         return view('pages/cadastro/professor-edit', compact('professor', 'cursos'));
@@ -77,17 +77,17 @@ class ProfessorController extends Controller
             'email' => $request->email,
         ]);
 
-        // Atualiza os campos da pessoa associada ao professor
-        $professor->pessoa->update([
+        // Atualiza os campos da visitante associada ao professor
+        $professor->visitante->update([
             'nome' => $request->nome,
             'sexo' => $request->sexo,
         ]);
 
-        // Atualiza os telefones associados à pessoa
+        // Atualiza os telefones associados à visitante
         $telefones = $request->tel; // Supondo que os telefones sejam enviados como um array
-        $professor->pessoa->telefones()->delete(); // Deleta todos os telefones existentes
+        $professor->visitante->telefones()->delete(); // Deleta todos os telefones existentes
         foreach ($telefones as $telefone) {
-            $professor->pessoa->telefones()->create(['numero' => $telefone]);
+            $professor->visitante->telefones()->create(['numero' => $telefone]);
         }
 
         // Sincroniza os cursos associados ao professor

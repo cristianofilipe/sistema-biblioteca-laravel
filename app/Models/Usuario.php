@@ -2,44 +2,46 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $primaryKey = 'id_usuario';
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'nome',
-        'sexo'
+        'name',
+        'email',
+        'password',
+        'tipo_usuario'
     ];
 
-    public function emprestimos()
-    {
-        return $this->hasMany(Emprestimo::class, 'pessoa_id');
-    }
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function telefones()
-    {
-        //uma pessoa pode ter varios telefones
-        return $this->hasMany(Telefone::class, 'pessoa_id');
-    }
-
-    public function aluno()
-    {
-        //uma pessoa tem um unico aluno associado
-        return $this->hasOne(Aluno::class, 'pessoa_id');
-    }
-
-    public function consultas()
-    {
-        return $this->hasMany(Consulta::class, 'pessoa_id');
-    }
-
-    public function professor()
-    {
-        return $this->hasOne(Professor::class, 'pessoa_id');
-    }
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 }

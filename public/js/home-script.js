@@ -1,1 +1,1 @@
-//alert('Pagina Home');
+document.getElementsByClassName

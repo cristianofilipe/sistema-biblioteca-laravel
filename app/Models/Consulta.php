@@ -13,7 +13,7 @@ class Consulta extends Model
 
     protected $fillable = [
         'data_consulta',
-        'pessoa_id',
+        'visitante_id',
         'material_id'
     ];
 

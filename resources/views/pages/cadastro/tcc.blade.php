@@ -9,9 +9,15 @@
     @csrf
     <label for="titulo">Titulo</label><br>
     <input type="text" name="titulo" id="titulo"><br>
+    @if ($error->has('titulo'))
+        <span>{{ $error->first('titulo') }}</span>
+    @endif
 
     <label for="orientador">Orientador</label><br>
     <input type="text" name="orientador" id="orientador"><br>
+    @if ($error->has('orientador'))
+        <span>{{ $error->first('orientador') }}</span>
+    @endif
 
     <label>Autor(es)</label><br>
     <input type="text" name="autores[]" placeholder="Autor 1"><button onclick="add()">+</button>

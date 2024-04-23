@@ -7,11 +7,15 @@ use App\Http\Controllers\Page\CadastroController;
 use App\Http\Controllers\Page\ListagemController;
 use App\Http\Controllers\Page\EmprestimoController;
 use App\Http\Controllers\Page\HomeController;
-use App\Http\Controllers\Page\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Page\RelatorioController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\TccController;
+use App\Models\Autor;
+use App\Models\Usuario;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +48,6 @@ Route::prefix('sistema-biblioteca')->group(function() {
 
         //Rotas para listagens
         Route::prefix('listagem')->group(function() {
-            Route::get('/', [ListagemController::class, 'index'])->name('listagem-index');
             Route::get('livro', [ListagemController::class, 'livro'])->name('listagem-livro');
             Route::get('tcc', [ListagemController::class, 'tcc'])->name('listagem-tcc');
             Route::get('revista', [ListagemController::class, 'revista'])->name('listagem-revista');
@@ -103,4 +106,13 @@ Route::prefix('sistema-biblioteca')->group(function() {
    
     Route::view('/404', 'errors.404')->name('404');
     Route::view('/403', 'errors.403')->name('403');
+    Route::get('/teste', function(Usuario $user) {
+       $user->name = 'Afonsina';
+       $user->email = 'afonsina@gmail.com';
+       $user->tipo_usuario = 'admin';
+       $user->password = Hash::make('1234');
+       $user->save();
+
+       exit;
+    })->name('teste');
 });

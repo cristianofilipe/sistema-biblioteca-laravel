@@ -14,6 +14,8 @@ class Material extends Model
         'tipo_material',
         'modo_aquisicao',
         'qtd_material',
+        'estante',
+        'ativo',
         'usuario_id'
     ];
 
@@ -49,9 +51,9 @@ class Material extends Model
         return $this->hasOne(CD::class, 'material_id');
     }
 
-    public function administrador()
+    public function usuario()
     {
-        return $this->belongsTo(Administrador::class);
+        return $this->belongsTo(Usuario::class);
     }
 
 }

@@ -1,0 +1,7 @@
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('/css/layout.css') }}">
+
+    <!-- Fontawesome icons -->
+    <link rel="stylesheet" href="{{ asset('/icons/css/all.min.css') }}">
+
+        <script src="{{ asset('/js/layout.js') }}"></script>

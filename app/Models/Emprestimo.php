@@ -14,7 +14,7 @@ class Emprestimo extends Model
     protected $fillable = [
         'data_devolucao',
         'data_emprestimo',
-        'pessoa_id',
+        'visitante_id',
         'material_id'
     ];
 

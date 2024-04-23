@@ -15,13 +15,13 @@ class Aluno extends Model
         'classe',
         'turma',
         'curso_id',
-        'pessoa_id'
+        'visitante_id'
     ];
 
     public function usuario()
     {
         //um aluno pertence a uma unica pessoa
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Usuario::class, 'visitante_id');
     }
 
     public function curso()

@@ -16,9 +16,9 @@ class Professor extends Model
         'email'
     ];
 
-    public function usuario()
+    public function visitante()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Visitante::class, 'visitante_id');
     }
 
     public function cursos()
