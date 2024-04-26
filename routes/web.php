@@ -56,6 +56,14 @@ Route::prefix('sistema-biblioteca')->group(function() {
             Route::get('professores', [ListagemController::class, 'professores'])->name('listagem-professores');
         });
 
+        
+        //Rotas para o tcc
+        Route::get('/tcc/{id}', [TccController::class, 'show'])->name('tcc-show');
+        Route::get('/tcc/editar/{id}', [TccController::class, 'edit'])->name('tcc-edit');
+        Route::post('/tcc', [TccController::class, 'store'])->name('tcc-store');
+        Route::put('/tcc/{id}', [TccController::class, 'update'])->name('tcc-update');
+        Route::delete('/tcc/{id}', [TccController::class, 'destroy'])->name('tcc-destroy');
+
         //Rotas para o aluno
         Route::get('/aluno/{id}', [AlunoController::class, 'show'])->name('aluno-show');
         Route::get('/aluno/editar/{id}', [AlunoController::class, 'edit'])->name('aluno-edit');
@@ -90,13 +98,6 @@ Route::prefix('sistema-biblioteca')->group(function() {
         Route::post('/professor', [ProfessorController::class, 'store'])->name('professor-store');
         Route::put('/professor/{id}', [ProfessorController::class, 'update'])->name('professor-update');
         Route::delete('/professor/{id}', [ProfessorController::class, 'destroy'])->name('professor-destroy');
-
-        //Rotas para o tcc
-        Route::get('/tcc/{id}', [TccController::class, 'show'])->name('tcc-show');
-        Route::get('/tcc/editar/{id}', [TccController::class, 'edit'])->name('tcc-edit');
-        Route::post('/tcc', [TccController::class, 'store'])->name('tcc-store');
-        Route::put('/tcc/{id}', [TccController::class, 'update'])->name('tcc-update');
-        Route::delete('/tcc/{id}', [TccController::class, 'destroy'])->name('tcc-destroy');
 
     });
 

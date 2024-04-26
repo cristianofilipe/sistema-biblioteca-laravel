@@ -37,6 +37,7 @@
                 <div class="form-group">
                     <label for="modo_aquisicao">Modo de aquisicao</label>
                     <select name="modo_aquisicao" id="modo_aquisicao">
+                        <option value="">Seleccione</option>
                         <option value="comprado">Comprado</option>
                         <option value="doado">Doado</option>
                         <option value="ofertado">Ofertado</option>

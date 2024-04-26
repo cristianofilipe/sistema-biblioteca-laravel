@@ -11,7 +11,7 @@ class CdFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,22 @@ class CdFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'capacidade' => ['required', 'numeric'],
+            'conteudo' => ['required', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'modo_aquisicao' => ['required', "regex:/^[a-zA-Z]+$/"],
+            'qtd_material' => ['required', "numeric"],
+            'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"],
+            'estante' => ['required', 'numeric']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'capacidade.decimal' => 'Capacidade invalida',
+            'regex' => ':attribute invalido',
+            'numeric' => ':attribute invalido',
+            'required' => ':attribute eh obrigatorio'
         ];
     }
 }

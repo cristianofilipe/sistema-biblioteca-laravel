@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CdFormRequest;
 use App\Models\CD;
+use App\Models\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CdController extends Controller
 {
@@ -20,11 +23,29 @@ class CdController extends Controller
 
     /**
      * Metodo responsavel por cadastrar um novo cd
-     * @param StoreUpdateAlunoFormRequest $request => dados a virem do formulario
+     * @param CdFormRequest $request => dados a virem do formulario
      */
-    public function store()
+    public function store(CdFormRequest $request)
     {
+        $cd = new CD();
+        $material = new Material();
         
+        //Inserindo os dados na tabela material
+        $material->data_entrada = $request->data_entrada;
+        $material->tipo_material = 'cd';
+        $material->modo_aquisicao = $request->modo_aquisicao;
+        $material->qtd_material = $request->qtd_material;
+        $material->usuario_id = Auth::user()->id_usuario;
+        $material->save();
+
+        //Inserindo os dados na tabela cd
+        $cd->capacidade = $request->capacidade;
+        $cd->conteudo = $request->conteudo;
+        $cd->material_id = $material->id_material;
+        $cd->save();
+
+        //se tudo der certo
+        return redirect()->route('listagem-cd');
     }
 
     /**

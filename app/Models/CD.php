@@ -11,6 +11,8 @@ class CD extends Model
 
     protected $primaryKey = 'id_cd';
 
+    protected $table = 'cds';
+
     protected $fillable = [
         'capacidade',
         'conteudo',
@@ -19,6 +21,6 @@ class CD extends Model
 
     public function material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 }

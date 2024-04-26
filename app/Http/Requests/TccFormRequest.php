@@ -22,17 +22,22 @@ class TccFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tema' => ['required', 'min:10' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'tema' => ['required', 'min:10', "regex:/^(?!.*(<script>|<\/script>|onclick|onload)).*$/i"],
             'orientador' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
-            'autores[]' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'autor' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'autores.*' => ['nullable', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
             'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"],
-            'estante' => ['required', 'regex:/^[0-9]+$/']
+            'estante' => ['required', 'regex:/^[0-9]+$/'],
+            'curso' => ['required', "regex:/^[1-8]$/"],
+            'ano' => ['required', "regex:/^[0-9]{4}$/"]
         ];
     }
 
     public function messages()
     {
         return [
+            'autores.*.regex' => 'Autor inválido',
+            'tema.alpha' => 'Tema invalido', 
             'required' => 'O campo :attribute é obrigatório',
             'min' => 'O :attribute precisa no minimo :min caracteres',
             'regex' => ':attribute inválido'

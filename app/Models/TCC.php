@@ -11,6 +11,8 @@ class TCC extends Model
 
     protected $primaryKey = 'id_tcc';
 
+    protected $table = 'tccs';
+
     protected $fillable = [
         'tema',
         'orientador',
@@ -20,12 +22,12 @@ class TCC extends Model
 
     public function material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 
     public function curso()
     {
-        return $this->belongsTo(Curso::class);
+        return $this->belongsTo(Curso::class, 'curso_id');
     }
 
     public function autores()

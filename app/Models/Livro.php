@@ -32,4 +32,8 @@ class Livro extends Model
         return $this->belongsToMany(Autor::class);
     }
 
+    public function classficacoes() {
+        return $this->belongsToMany(Classificacao::class);
+    }
+
 }
