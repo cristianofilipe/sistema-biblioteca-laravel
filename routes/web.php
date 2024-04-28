@@ -116,4 +116,9 @@ Route::prefix('sistema-biblioteca')->group(function() {
 
        exit;
     })->name('teste');
+
+    Route::get('/teste2', function() {
+        $autor = Autor::where('nome', 'like', '%luis damas%')->first();
+        dd($autor);
+    });
 });

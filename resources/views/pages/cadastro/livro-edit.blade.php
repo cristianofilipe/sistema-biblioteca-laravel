@@ -1,63 +1,103 @@
 @extends('layout.app')
 
-@section('title', 'Cadastro | Livro')
+@section('title', 'Editar | Livro')
 
 <link rel="stylesheet" href="{{ asset('/css/form.css') }}">
 
 @section('content')
 
 <div class="form-container">
-    <form action="{{ route('livro-store') }}" method="post">
-        @csrf
 
-        <h3 class="form-title">Cadastro de Livros</h3>
+    <form action="{{ route('livro-update', $livro->id_livro) }}" method="post">
+        @csrf
+        @method('put')
+        
+        <h3 class="form-title">Editar livro {{ $livro->id_livro }}</h3>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="div-form">
+            <!--- Titulo -->
             <div class="form-group">
-                <label for="titulo">Título</label>
-                <input type="text" name="titulo" id="titulo" class="form-input" placeholder="Ex: Ed. Manual e Plástica" value="{{ old('titulo') }}"><br>
+                <label for="titulo">Titulo</label>
+                <input type="text" name="titulo" id="titulo" class="form-input" value="{{ $livro->titulo ?? old('titulo') }}"><br>
                 @if ($errors->has('titulo'))
                     <span style="color: red">{{ $errors->first('titulo') }}</span>
                 @endif
             </div>
         
+            <!-- Ano -->
             <div class="form-group">
-                <label for="ano_publicacao">Ano de publicacao</label>
-                <input type="number" name="ano_publicacao" id="ano_publicacao" class="form-input" placeholder="Ex: 2021" value="{{ old('ano_publicacao ') }}"><br>  
+                <label for="ano">Ano</label>
+                <input type="text" name="ano_publicacao" id="ano" class="form-input" value="{{ $livro->ano_publicacao }}"><br>  
                 @if ($errors->has('ano_publicacao'))
                     <span style="color: red">{{ $errors->first('ano_publicacao') }}</span>
                 @endif
             </div>
 
+            <!-- Volume -->
             <div class="form-group">
                 <label for="volume">Volume</label>
-                <input type="text" name="volume" id="volume" class="form-input" placeholder="Ex: Volume 2" value="{{ old('volume') }}"><br>
+                <input type="text" name="volume" class="form-input" value="{{ $livro->volume }}">
                 @if ($errors->has('volume'))
                     <span style="color: red">{{ $errors->first('volume') }}</span>
                 @endif
             </div>
         </div>
 
+        <div class="div-form">   
+            <!-- Autores -->
+            <div id="form-group">
+                <div class="grupo" id="grupo">
+                    <label for="autores">Autores</label>
+                    <div class="autor-div">
+                        <input type="text" name="autor" class="form-input" value="{{ $autores[0]->nome }}">
+                        @if ($errors->has('autor'))
+                            <span style="color: red">{{ $errors->first('autor') }}</span>
+                        @endif
+                        @for ($index = 1; $index < 5; $index++)
+                            @if (!isset($autores[$index]))
+                                <input type="text" name="autores[]" class="form-input">
+                            @else
+                                <input type="text" name="autores[]" class="form-input" value="{{ $autores[$index]->nome }}">
+                            @endif             
+                        @endfor
+                    </div>                  
+                </div>
+            </div>
+        </div>
+
         <div class="div-form">
+            <!-- Edicao -->
             <div class="form-group">
                 <label for="edicao">Edicao</label>
-                <input type="text" name="edicao" id="edicao" class="form-input" placeholder="1. edição" value="{{ old('edicao') }}"><br>
+                <input type="text" name="edicao" class="form-input" value="{{ $livro->edicao }}">
                 @if ($errors->has('edicao'))
                     <span style="color: red">{{ $errors->first('edicao') }}</span>
                 @endif
             </div>
 
+            <!-- ISBN -->
             <div class="form-group">
                 <label for="isbn">ISBN</label>
-                <input type="number" name="isbn" id="isbn" class="form-input" placeholder="Ex: 978-989-762-271-7" value="{{ old('isbn') }}"><br>
+                <input type="text" name="isbn" class="form-input" value="{{ $livro->isbn }}">
                 @if ($errors->has('isbn'))
                     <span style="color: red">{{ $errors->first('isbn') }}</span>
                 @endif
             </div>
-        
+
+            <!-- Editora -->
             <div class="form-group">
                 <label for="editora">Editora</label>
-                <input type="text" name="editora" id="editora" class="form-input" placeholder="Editora Das Letras, S.A" value="{{ old('editora') }}"><br>
+                <input type="text" name="editora" class="form-input" value="{{ $livro->editora }}">
                 @if ($errors->has('editora'))
                     <span style="color: red">{{ $errors->first('editora') }}</span>
                 @endif
@@ -65,35 +105,16 @@
         </div>
 
         <div class="div-form">   
-            <div id="form-group">
-                <div class="grupo" id="grupo">
-                    <label for="autores">Autores</label>
-                    <div class="autor-div">
-                        <input type="text" name="autor" id="autor" class="form-input" placeholder="Autor 1 (obrigatório)" value="{{ old('autor') }}">
-                        @if ($errors->has('autor'))
-                            <br><span style="color: red">{{ $errors->first('autor') }}</span>
-                        @endif
-
-                        @for ($i = 1; $i < 5; $i++)
-                            <input type="text" name="autores[]" id="autores" class="form-input" placeholder="Autor {{ $i + 1 }}">
-                            @if ($errors->has("autores.$i"))
-                                <br><span style="color: red">{{ $errors->first("autores.$i") }}</span>
-                            @endif
-                        @endfor
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="div-form">
+            <!-- Data de entrada -->
             <div class="form-group">
                 <label for="data_entrada">Data de entrada</label>
-                <input type="date" name="data_entrada" id="data_entrada" class="form-input" value="{{ old('data_entrada') }}"><br>
+                <input type="date" name="data_entrada" id="data_entrada" class="form-input" value="{{ $livro->material->data_entrada }}"><br>
                 @if ($errors->has('data_entrada'))
                     <span style="color: red">{{ $errors->first('data_entrada') }}</span>
                 @endif
             </div>
 
+            <!-- Modo de aquisicao -->
             <div class="form-group">
                 <label for="modo_aquisicao">Modo de aquisicao</label>
                 <select name="modo_aquisicao" id="modo_aquisicao">
@@ -106,20 +127,21 @@
                 @endif
             </div>
 
+            <!-- Exemplares -->
             <div class="form-group">
                 <label for="qtd_material">Exemplares</label>
-                <input type="number" name="qtd_material" id="qtd_material" class="form-input" placeholder="Ex: 4" value="{{ old('qtd_material') }}"><br>
+                <input type="number" name="qtd_material" id="qtd_material" class="form-input" placeholder="Ex: 4" value="{{ $livro->material->qtd_material }}"><br>
                 @if ($errors->has('qtd_material'))
                     <span style="color: red">{{ $errors->first('qtd_material') }}</span>
                 @endif
             </div>
         </div>
 
-        <div class="div-form">    
-
+        <div class="div-form">
+            <!-- Estante -->
             <div class="form-group">
                 <label for="estante">Estante</label>
-                <input type="number" name="estante" id="estante" class="form-input" class="form-input" placeholder="Ex: 6" value="{{ old('estante') }}">
+                <input type="number" name="estante" id="estante" class="form-input" value="{{ $livro->material->estante }}" >
                 @if ($errors->has('estante'))
                     <span style="color: red">{{ $errors->first('estante') }}</span>
                 @endif
@@ -127,10 +149,10 @@
         </div>
 
         <div class="div-form">
-            <button type="submit" class="btn-submit">Enviar</button>
+            <button type="submit" class="btn-submit">Editar</button>
         </div>
     </form> 
+
 </div>
-<script src="{{ asset('/js/form.js') }}"></script>
 
 @endsection 

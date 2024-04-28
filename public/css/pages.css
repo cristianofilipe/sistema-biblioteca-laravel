@@ -8,6 +8,8 @@
 .page-container {
     display: flex;
     flex-direction: column;
+    width: 1200px;
+    padding-left: 60px;
 }
 
 .form-pesquisa {
@@ -66,7 +68,7 @@
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    width: 1000px;
+    width: 100%;
     border: 1px solid #ddd;
 }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlunoFormRequest;
 use App\Models\Aluno;
 use App\Models\Curso;
-use App\Models\usuario;
+use App\Models\Visitante;
 
 class AlunoController extends Controller
 {
@@ -16,7 +16,7 @@ class AlunoController extends Controller
      */
     public function show(int $id)
     {
-        if(!$aluno = Aluno::with('usuario.telefones', 'curso')->find($id)) {
+        if(!$aluno = Aluno::with('visitante.telefones', 'curso')->find($id)) {
             return back();
         }
 
@@ -31,23 +31,23 @@ class AlunoController extends Controller
     public function store(AlunoFormRequest $request)
     {
         $aluno = new Aluno();
-        $usuario = new Usuario();
+        $visitante = new Visitante();
 
-        $usuario->nome = $request->nome;
-        $usuario->sexo = $request->sexo;
-        $usuario->save();
+        $visitante->nome = $request->nome;
+        $visitante->sexo = $request->sexo;
+        $visitante->save();
 
-        // Salva os telefones associados à usuario
+        // Salva os telefones associados à visitante
         foreach($request->tel as $tel) {
             if(!is_null($tel)) {
-                $usuario->telefones()->create(['numero' => $tel]);
+                $visitante->telefones()->create(['numero' => $tel]);
             }
         }
 
         $aluno->classe = $request->classe;
         $aluno->turma = $request->turma;
         $aluno->curso_id = $request->curso;
-        $aluno->usuario_id = $usuario->id_usuario;
+        $aluno->visitante_id = $visitante->id_visitante;
         $aluno->save();
         
         return redirect()->route('listagem-alunos');
@@ -59,9 +59,9 @@ class AlunoController extends Controller
      */
     public function edit(int $id)
     {
-        $aluno = Aluno::with('usuario.telefones')->find($id);
+        $aluno = Aluno::with('visi$visitante.telefones')->find($id);
         $cursos = Curso::all();
-        $telefones = $aluno->usuario->telefones;
+        $telefones = $aluno->visitante->telefones;
         if(!$aluno) {
             return back();
         }
@@ -84,16 +84,16 @@ class AlunoController extends Controller
             'curso_id' => $request->curso
         ]);
 
-        $aluno->usuario->update([
+        $aluno->visitante->update([
             'nome' => $request->nome,
             'sexo' => $request->sexo
         ]);
 
         $telefones = $request->tel;
-        $aluno->usuario->telefones()->delete();
+        $aluno->visitante->telefones()->delete();
         
         foreach($telefones as $telefone) {
-            $aluno->usuario->telefones()->create(['numero' => $telefone]);
+            $aluno->visitante->telefones()->create(['numero' => $telefone]);
         }
 
         return redirect()->route('listagem-alunos');

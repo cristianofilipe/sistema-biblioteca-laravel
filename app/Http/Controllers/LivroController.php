@@ -16,15 +16,17 @@ class LivroController extends Controller
      */
     public function show(int $id)
     {
-        
+        $livro = Livro::with('material', 'autores')->find($id);
+        dd($livro);
     }
 
     /**
      * Metodo responsavel por cadastrar novo aluno
-     * @param StoreUpdateAlunoFormRequest $request => dados a virem do formulario
+     * @param LivroFormRequest $request => dados a virem do formulario
      */
     public function store(LivroFormRequest $request)
     {
+        //dd($request);
         //Iniciar um novo livro e um novo material
         $livro = new Livro();
         $material = new Material();
@@ -45,40 +47,57 @@ class LivroController extends Controller
         $material->save();
 
         //inserirndo dados na tabela livro
-        $livro->titulo = $request->titulo;
+        $livro->titulo = htmlspecialchars($request->titulo);
         $livro->volume = $request->volume;
         $livro->ano_publicacao = $request->ano_publicacao;
         $livro->edicao = $request->edicao;
         $livro->isbn = $request->isbn;
         $livro->editora = $request->editora;
-        $livro->cdd = $request->cdd;
+        $livro->cdd = 55;
         $livro->material_id = $material->id_material;
         $livro->save();
 
-        dd($autores);
-        //relacionar os autores com o livro
-        foreach($autores as $author) {
-            $autor = Autor::all(['nome', 'cota_autor'])->where('nome', 'like', '%' . $author . '%');
+        //Inserindo o autor 1
+        //verificando se autor existe
+        if($autor = Autor::where('nome', 'like', '%'. $request->autor .'%')->first()) {
+            $livro->autores()->attach($autor->id_autor);
+        } else {
+            $autor = new Autor();
+            $autor->nome = $request->autor;
+            $autor->cota_autor = random_int(30, 500);
+            $autor->save();
 
-            //verificando se o autor ja existe na tabela autores
-            if(!$autor) {
-                $cota_autor = random_int(30, 500);
-                $autor = Autor::create(['nome' => $autor->nome, 'cota_autor' => $cota_autor]);
-            }
-
-            echo "<pre>";
-            var_dump($autor);
-            
-            //Associa o autor ao livro
-            //$livro->autores()->attach($autor->id_autor);
-            
+            $livro->autores()->attach($autor->id_autor);
         }
-
-        exit;
         
-        return redirect()->route('home');
+        //inserindo outros autores ao livro
+        $this->inserirAutoresLivro($livro, $autores);
+        
+        return redirect()->route('listagem-livro');
 
     }
+
+    /**
+     * Metodo responsavel por inserir outros autores no livro
+     * @param Livro $livro => livro a ser inserido
+     * @param array $autores  => autores a serem associados ao livro
+     */
+    private function inserirAutoresLivro($livro, $autores) {
+        foreach($autores as $author) {
+            if (!is_null($author) && trim($author) !== '') { // Verifica se o nome do autor não é nulo ou vazio
+                if($existingAuthor = Autor::where('nome', 'like', '%'. $author .'%')->first()) {
+                    $livro->autores()->attach($existingAuthor->id_autor);
+                } else {
+                    $newAuthor = new Autor();
+                    $newAuthor->nome = $author;
+                    $newAuthor->cota_autor = random_int(30, 500);
+                    $newAuthor->save();
+                    $livro->autores()->attach($newAuthor->id_autor);
+                }
+            }
+        }
+    }
+    
 
     /**
      * Metodo responsavel por exibir o formulario de edicao do aluno
@@ -86,17 +105,61 @@ class LivroController extends Controller
      */
     public function edit(int $id)
     {
-        
+        if(!$livro = Livro::with('material', 'autores')->find($id)) {
+            return back();
+        }
+
+        $autores = $livro->autores;
+
+        return view('pages/cadastro/livro-edit', compact('livro', 'autores'));
     }
 
     /**
      * Metodo responsavel por persistir os dados da edicao na base de dados
-     * @param StoreUpdateAlunoFormRequest $request => Dados da requisicao
+     * @param LivroFormRequest $request => Dados da requisicao
      * @param int $id => id do aluno a ser atualizado
      */
-    public function update(int $id)
+    public function update(LivroFormRequest $request, int $id)
     {
+        $livro = Livro::findOrFail($id);
+
+        $autores = $request->input('autores');
+
+        $livro->update([
+            'titulo' => $request->titulo,
+            'ano_publicacao' => $request->ano_publicacao,
+            'volume' => $request->volume,
+            'edicao' => $request->edicao,
+            'isbn' => $request->isbn,
+            'editora' => $request->editora,
+        ]);
+
+        $livro->material->update([
+            'data_entrada' => $request->data_entrada,
+            'modo_aquisicao' => $request->modo_aquisicao,
+            'qtd_material' => $request->qtd_material,
+            'estante' => $request->estante
+        ]);
+
+        //apagando toda associacao entre o livro e o(s) autores ligados a ele
+        $livro->autores()->delete();
+
+        if($autor = Autor::where('nome', 'like', '%'. $request->autor .'%')->first()) {
+            $livro->autores()->attach($autor->id_autor);
+        } else {
+            $autor = new Autor();
+            $autor->nome = $request->autor;
+            $autor->cota_autor = random_int(30, 500);
+            $autor->save();
+
+            $livro->autores()->attach($autor->id_autor);
+        }
         
+        //inserindo outros autores ao livro
+        $this->inserirAutoresLivro($livro, $autores);     
+        
+        return redirect()->route('listagem-livro');
+
     }
 
     /**
@@ -105,6 +168,10 @@ class LivroController extends Controller
      */
     public function destroy(int $id)
     {
-        
+        $livro = Livro::find($id);
+
+        $livro->delete();
+
+        return redirect()->route('listagem-livro');
     }
 }

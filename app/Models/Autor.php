@@ -18,6 +18,6 @@ class Autor extends Model
 
     public function livros()
     {
-        return $this->belongsToMany(Livro::class);
+        return $this->belongsToMany(Livro::class, 'autor_livro', 'autor_id', 'livro_id');
     }
 }

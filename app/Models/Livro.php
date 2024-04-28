@@ -18,21 +18,21 @@ class Livro extends Model
         'edicao',
         'isbn',
         'editora',
-        'cdd',
-        'material_id'
+        'material_id',
+        'cdd'
     ];
 
     public function material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 
     public function autores()
     {
-        return $this->belongsToMany(Autor::class);
+        return $this->belongsToMany(Autor::class, 'autor_livro', 'livro_id', 'autor_id');
     }
 
-    public function classficacoes() {
+    public function classificacoes() {
         return $this->belongsToMany(Classificacao::class);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use App\Models\Aluno;
 use App\Models\CD;
+use App\Models\Livro;
 use App\Models\Professor;
 use App\Models\Revista;
 use App\Models\TCC;
@@ -20,9 +21,50 @@ class ListagemController extends Controller
     /**
      * Listagem de todos os livros cadastrados
      */
-    public function livro()
+    public function livro(Request $request)
     {
-        return view('pages/listagem/livro');
+        $query = Livro::query();
+
+        if($request->filled('titulo')) {
+            $query->where('titulo', 'like', '%'. $request->titulo .'%');
+        }
+
+        if($request->filled('editora')) {
+            $query->where('editora', 'like', '%' . $request->editora . '%');
+        }
+
+        if($request->filled('isbn')) {
+            $query->where('isbn', 'like', '%' . $request->isbn . '%');
+        }
+
+        if($request->filled('ano_publicacao')) {
+            $query->where('ano_publicacao', 'like', '%' . $request->ano_publicacao . '%');
+        }
+
+        if ($request->filled('data_entrada')) {
+            // Se a data de entrada for fornecida, buscamos nas relações de material
+            $query->whereHas('material', function ($q) use ($request) {
+                $q->whereDate('data_entrada', $request->data_entrada);
+            });
+        }
+
+        if ($request->filled('modo_aquisicao')) {
+            // Se o modo de aquisicao for fornecido, buscamos nas relações de material
+            $query->whereHas('material', function ($q) use ($request) {
+                $q->where('modo_aquisicao', $request->modo_aquisicao);
+            });
+        }
+
+        if ($request->filled('autor')) {
+            // Se o modo de aquisicao for fornecido, buscamos nas relações de material
+            $query->whereHas('autores', function ($q) use ($request) {
+                $q->where('nome', 'like', '%'. $request->autor .'%');
+            });
+        }
+
+        $livros = $query->get();
+
+        return view('pages/listagem/livro', compact('livros'));
     }
 
     /**
@@ -40,8 +82,8 @@ class ListagemController extends Controller
             $query->where('titulo', 'like', '%' . $request->titulo . '%');
         }
 
-        if($request->filled('subtitulo')) {
-            $query->where('subtitulo', 'like', '%' . $request->subtitulo . '%');
+        if($request->filled('isbn')) {
+            $query->where('isbn', 'like', '%' . $request->isbn . '%');
         }
 
         if($request->filled('titulo')) {
@@ -118,10 +160,35 @@ class ListagemController extends Controller
     /**
      * Listagem de todos os alunos cadastrados
      */
-    public function alunos()
+    public function alunos(Request $request)
     {
-        $alunos = Aluno::with('pessoa', 'curso')->get();
-        return view('pages/listagem/alunos', ['alunos' => $alunos]);
+        $query = Aluno::query();
+
+        if($request->filled('classe')) {
+            $query->where('classe', $request->classe);
+        }
+
+        if($request->filled('turma')) {
+            $query->where('turma', 'like', '%' . $request->turma . '%');
+        }
+
+        if ($request->filled('nome')) {
+            
+            $query->whereHas('visitante', function ($q) use ($request) {
+                $q->whereDate('nome', $request->nome);
+            });
+        }
+
+        if ($request->filled('telefone')) {
+            
+            $query->whereHas('visitante.telefones', function ($q) use ($request) {
+                $q->whereDate('numero', $request->telefone);
+            });
+        }
+
+        
+        $alunos = Aluno::with('visitante', 'curso')->get();
+        return view('pages/listagem/alunos', compact('alunos'));
     }
 
     /**

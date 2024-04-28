@@ -17,7 +17,7 @@ class CdController extends Controller
     public function show(int $id)
     {
         $cd = CD::with('material')->find($id);
-
+        dd($cd);
         return view('pages/listagem/cd-show', ['cd' => $cd]);
     }
 
@@ -54,17 +54,38 @@ class CdController extends Controller
      */
     public function edit(int $id)
     {
-        
+        $cd = CD::with('material')->find($id);
+
+        if (!$cd) {
+            return redirect()->route('listagem-cd'); // Redireciona para a página de listagem de CDs
+        }
+
+        return view('pages/cadastro/cd-edit', compact('cd'));
     }
+
 
     /**
      * Metodo responsavel por persistir os dados da edicao na base de dados
-     * @param StoreUpdateAlunoFormRequest $request => Dados da requisicao
+     * @param CdFormRequest $request => Dados da requisicao
      * @param int $id => id do aluno a ser atualizado
      */
-    public function update(int $id)
+    public function update(CdFormRequest $request, int $id)
     {
-        
+        $cd = CD::find($id);
+
+        $cd->update([
+            'capacidade' => $request->capacidade,
+            'conteudo' => $request->conteudo
+        ]);
+
+        $cd->material->update([
+            'data_entrada' => $request->data_entrada,
+            'modo_aquisicao' => $request->modo_aquisicao,
+            'qtd_material' => $request->qtd_material,
+            'estante' => $request->estante
+        ]);
+
+        return redirect()->route('listagem-cd');
     }
 
     /**
@@ -73,6 +94,10 @@ class CdController extends Controller
      */
     public function destroy(int $id)
     {
-        
+        $cd = CD::findORFail($id);
+
+        $cd->delete();
+
+        return redirect()->route('listagem-cd');
     }
 }

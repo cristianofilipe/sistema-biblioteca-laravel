@@ -46,7 +46,6 @@
                                 <br><span style="color: red">{{ $errors->first("autores.$i") }}</span>
                             @endif
                         @endfor
-                        
                     </div>
                 </div>
             </div>

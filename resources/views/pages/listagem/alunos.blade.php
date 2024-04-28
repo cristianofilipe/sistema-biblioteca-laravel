@@ -1,73 +1,111 @@
 @extends('layout.app')
 
-@section('title', 'Listagem de alunos')
+@section('title', 'Listagem | Alunos')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('/css/pages.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/form.css') }}">
+@endpush
 
 @section('content')
 
-<div class="container">
-    <h3>Listagem de alunos</h3>
+<div class="page-container">
+    <div class="form-pesquisa">
+        <h3 class="title" style="margin-bottom: 0">Pesquisa</h3>
+        <form action="{{ route('listagem-alunos') }}" method="get">
+            @csrf
+            <div class="div-form">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="classe">Classe</label>
+                    <input type="text" name="classe" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="turma">Turma</label>
+                    <input type="text" name="turma" class="form-input">
+                </div>
+            </div>
 
-    <div class="mb-3">
-        <a href="{{ route('cadastro-aluno') }}" class="btn btn-primary">Novo Aluno</a>
+            <div class="div-form">
+                <div class="form-group">
+                    <label for="curso">Curso</label>
+                    <select name="curso" id="curso">
+                        <option value="{{0}}">Selecione</option>
+                        @foreach ($cursos as $curso)
+                            <option value="{{ $curso->id_curso }}">{{ $curso->nome }}</option>
+                        @endforeach
+                    </select>
+                    @if ($errors->has('curso'))
+                        <span style="color: red">{{ $errors->first('curso') }}</span>
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" name="telefone" class="form-input">
+                </div>
+            </div>
+
+            <div class="div-form">
+                <button type="submit" class="btn show" style="margin-left: 20px">Pesquisar</button>
+            </div>
+            
+        </form>  
     </div>
 
-    @if(count($alunos) > 0) 
-        <table class="table table-striped table-responsive">
-            <thead>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Sexo</th>
-                <th>Turma</th>
-                <th>Classe</th>
-                <th>Curso</th>
-                <th colspan="3">Acoes</th>
-            </thead>
-            <tbody>
-                @foreach($alunos as $aluno)
-                    <tr>
-                        <td>{{ $aluno->id_aluno }}</td>
-                        <td>{{ $aluno->pessoa->nome }}</td>
-                        <td>{{ $aluno->pessoa->sexo }}</td>
-                        <td>{{ $aluno->turma }}</td>
-                        <td>{{ $aluno->classe }}</td>
-                        <td>{{ $aluno->curso->nome }}</td>
-                        <td><a href="{{ route('aluno-show', $aluno->id_aluno) }}" class="btn btn-primary">Ver mais</a></td>
-                        <td><a href="{{ route('aluno-edit', $aluno->id_aluno) }}" class="btn btn-success" role="button">Editar</a></td>
-                        <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $aluno->id_aluno }}">
-                                Deletar
-                            </button>
-                        </td>
-                    </tr>
+    <div class="content">
+        <div class="top">
+            <h3 class="title">Listagem de Alunos</h3>
 
-                    
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal{{ $aluno->id_aluno }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $aluno->id_aluno }}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Aluno {{ $aluno->id_aluno }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Voce tem a certeza que deseja deletar o aluno {{ $aluno->id_aluno }}?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nao</button>
-                                    <form action="{{ route('aluno-destroy', $aluno->id_aluno) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-primary">Sim</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-  
-                @endforeach
-            </tbody>
-        </table>
-    @endif
+            <div class="mb-3">
+                <a href="{{ route('cadastro-aluno') }}" class="btn create">Novo Aluno</a>
+            </div>
+        </div>
+
+        @if(count($alunos) > 0)
+            <div class="list'container">
+                <table>
+                    <thead>
+                        <th>Nome</th>
+                        <th>Classe</th>
+                        <th>Turma</th>
+                        <th>Curso</th>
+                        <th colspan="3">Acoes</th>
+                    </thead>
+                    <tbody>
+                        @foreach($alunos as $aluno)
+                            <tr>
+                                <td>{{ Str::limit($aluno->visitante->nome, 15)}}</td>
+                                <td>{{ $aluno->classe }}</td>
+                                <td>{{ $aluno->turma }}</td>
+                                <td>{{ $aluno->curso->nome }}</td>
+                                <td><a href="{{ route('aluno-show', $aluno->id_aluno) }}" class="btn show">Ver mais</a></td>
+                                <td><a href="{{ route('aluno-edit', $aluno->id_aluno) }}" class="btn edit" role="button">Editar</a></td>
+                                <td>
+                                    @can('acesso-autorizado')
+                                        <!-- Button trigger modal -->
+                                        <form action="{{ route('aluno-destroy', $aluno->id_aluno) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn delete">Excluir</button>
+                                        </form>
+                                    @endcan
+                                    
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                
+            </div>
+        @else
+            <h2>Não há nenhuma aluno cadastrada</h2>
+        @endif
+    </div>
 </div>
-
+  
+  
 @endsection

@@ -20,9 +20,6 @@ return new class extends Migration
             // Definindo as chaves estrangeiras
             $table->foreign('autor_id')->references('id_autor')->on('autors')->onDelete('cascade');
             $table->foreign('livro_id')->references('id_livro')->on('livros')->onDelete('cascade');
-
-            // Definindo uma chave primária composta
-            $table->primary(['autor_id', 'livro_id']);
         });
     }
 
