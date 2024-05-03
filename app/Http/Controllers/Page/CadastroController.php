@@ -45,5 +45,10 @@ class CadastroController extends Controller
         $cursos = Curso::all(['id_curso','nome']);
         return view('pages/cadastro/professor', compact('cursos'));
     }
+
+    public function emprestimo()
+    {
+        return view('pages.cadastro.emprestimo');
+    }
     
 }

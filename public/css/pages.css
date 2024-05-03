@@ -82,10 +82,6 @@ th {
     padding: 16px;
 }
 
-tbody > tr:nth-child(2) {
-    background-color: lightgray;
-}
-
 tbody > tr:hover {
     opacity: 0.9;
 }

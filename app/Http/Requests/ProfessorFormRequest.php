@@ -22,28 +22,22 @@ class ProfessorFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'min:3', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'nome' => ['required', 'min:3'],
             'email' => ['email'],
-            'sexo' => ['required', "regex:/^[MF]$/"],
-            'telefone' => ['regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/'],
+            'genero' => ['required', "regex:/^[MF]$/"],
+            'tel.*' => ['nullable', 'regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/'],
             'cursos' => ['required', 'array'],
-            'cursos.*' => ['exists:cursos,id_curso'],
-            'telefones.*' => 'nullable|numeric'
+            'cursos.*' => ['exists:cursos,id_curso']
         ];
     }
 
     public function messages()
     {
         return [
-            'nome.required' => 'O nome eh obrigatorio',
-            'nome.min' => 'O nome precisa no minimo 3 caracteres',
-            'nome.regex' => 'Nome invalido',
+            'regex' => ':attribute invalido',
+            'required' => 'o campo :attribute e obrigatorio',
             'email.email' => 'Email invalido',
-            'sexo.required' => 'O sexo e obrigatorio',
-            'sexo.regex' => 'Sexo invalido',
-            'telefone.regex' => 'Telefone invalido',
-            'cursos.required' => 'Selecione pelomenos um curso',
-            'telefones.numeric' => 'Telefone invalido'
+            'cursos.array' => 'Cursos invalidos'
         ];
     }
 }

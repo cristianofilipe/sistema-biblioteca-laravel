@@ -43,7 +43,7 @@
                 <div class="middle">
                     <div class="left">
                         <h3>Total de Materiais</h3>
-                        <h1>45</h1>
+                        <h1>{{ $total['material'] }}</h1>
                     </div>
                 </div>
               
@@ -55,7 +55,7 @@
                 <div class="middle">
                     <div class="left">
                         <h3>Total de Empréstimos</h3>
-                        <h1>11</h1>
+                        <h1>{{ $total['emprestimos'] }}</h1>
                     </div>
                 
                 </div>
@@ -68,7 +68,7 @@
                 <div class="middle">
                     <div class="left">
                         <h3>Total de Funcionários</h3>
-                        <h1>7</h1>
+                        <h1>{{ $total['funcionarios'] }}</h1>
                     </div>
                     
                 </div>
@@ -79,7 +79,7 @@
                     <div class="middle">
                     <div class="left">
                         <h3>Total de Relatórios</h3>
-                        <h1>10</h1>
+                        <h1>{{ $total['relatorios'] }}</h1>
                     </div>
                 </div>
               

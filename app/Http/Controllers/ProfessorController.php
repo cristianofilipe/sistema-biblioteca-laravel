@@ -17,6 +17,7 @@ class ProfessorController extends Controller
     {
         $professor = Professor::with('visitante.telefones', 'cursos')->find($id);
 
+        dd($professor);
         return view('pages/listagem/professor-show', compact('professor'));
     }
 
@@ -30,7 +31,7 @@ class ProfessorController extends Controller
         $visitante = new Visitante();
 
         $visitante->nome = $request->nome;
-        $visitante->sexo = $request->sexo;
+        $visitante->sexo = $request->genero;
         $visitante->save();
 
         // Salva os telefones associados à visitante
@@ -57,10 +58,20 @@ class ProfessorController extends Controller
      */
     public function edit(int $id)
     {
-        $professor = Professor::with('visitante.telefones', 'cursos')->find($id);
-        $cursos = Curso::all();
+        if(!$professor = Professor::with('visitante.telefones', 'cursos')->find($id)) {
+            return back();
+        }
 
-        return view('pages/cadastro/professor-edit', compact('professor', 'cursos'));
+        //Todos os cursos existentes
+        $cursos = Curso::all();
+        
+        //Todos os cursos ministrados pelo professor
+        $cursosProf = $professor->cursos->pluck('id_curso')->toArray();
+
+        //Numero(s) de telefone do professor 
+        $telefones = $professor->visitante->telefones;
+
+        return view('pages/cadastro/professor-edit', compact('professor', 'cursos', 'telefones', 'cursosProf'));
     }
 
     /**
@@ -80,14 +91,16 @@ class ProfessorController extends Controller
         // Atualiza os campos da visitante associada ao professor
         $professor->visitante->update([
             'nome' => $request->nome,
-            'sexo' => $request->sexo,
+            'sexo' => $request->genero,
         ]);
 
         // Atualiza os telefones associados à visitante
         $telefones = $request->tel; // Supondo que os telefones sejam enviados como um array
         $professor->visitante->telefones()->delete(); // Deleta todos os telefones existentes
         foreach ($telefones as $telefone) {
-            $professor->visitante->telefones()->create(['numero' => $telefone]);
+            if(!is_null($telefone)) {
+                $professor->visitante->telefones()->create(['numero' => $telefone]);
+            }
         }
 
         // Sincroniza os cursos associados ao professor

@@ -5,15 +5,18 @@ use App\Http\Controllers\CdController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\Page\CadastroController;
 use App\Http\Controllers\Page\ListagemController;
-use App\Http\Controllers\Page\EmprestimoController;
 use App\Http\Controllers\Page\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EmprestimoController;
 use App\Http\Controllers\Page\RelatorioController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\TccController;
 use App\Models\Autor;
+use App\Models\Livro;
 use App\Models\Usuario;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +32,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('sistema-biblioteca')->group(function() {
-
     Route::middleware('auth')->group(function() {
         Route::get('home', [HomeController::class, 'index'])->name('home');
         Route::get('emprestimos', [EmprestimoController::class, 'index'])->middleware('can:acesso-autorizado')->name('emprestimos');
@@ -39,6 +40,7 @@ Route::prefix('sistema-biblioteca')->group(function() {
 
         //Rotas para cadastros
         Route::get('cadastro', [CadastroController::class, 'index'])->name('cadastro-index');
+        Route::get('cadastro/emprestimo', [CadastroController::class, 'emprestimo'])->middleware('can:acesso-autorizado')->name('cadastro-emprestimo');
         Route::get('cadastro/livro', [CadastroController::class, 'livro'])->name('cadastro-livro');
         Route::get('cadastro/tcc', [CadastroController::class, 'tcc'])->name('cadastro-tcc');
         Route::get('cadastro/revista', [CadastroController::class, 'revista'])->name('cadastro-revista');
@@ -118,7 +120,11 @@ Route::prefix('sistema-biblioteca')->group(function() {
     })->name('teste');
 
     Route::get('/teste2', function() {
-        $autor = Autor::where('nome', 'like', '%luis damas%')->first();
-        dd($autor);
+        $senha = Illuminate\Support\Str::password(15, true, true, false);
+        echo $senha;
+        exit;
+        $livros = Livro::all(['titulo', 'editora'])->toArray();
+        $pdf = FacadePdf::loadView('teste');
+        //return view('teste');
+        return $pdf->download('relatorios.pdf');
     });
-});

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
 use App\Models\Aluno;
 use App\Models\CD;
+use App\Models\Curso;
 use App\Models\Livro;
 use App\Models\Professor;
 use App\Models\Revista;
@@ -186,9 +187,9 @@ class ListagemController extends Controller
             });
         }
 
-        
+        $cursos = Curso::all('id_curso', 'nome');
         $alunos = Aluno::with('visitante', 'curso')->get();
-        return view('pages/listagem/alunos', compact('alunos'));
+        return view('pages/listagem/alunos', compact('alunos', 'cursos'));
     }
 
     /**
@@ -196,7 +197,7 @@ class ListagemController extends Controller
      */
     public function professores()
     {
-        $professores = Professor::with('pessoa.telefones', 'cursos')->get();
+        $professores = Professor::with('visitante.telefones', 'cursos')->get();
 
         return view('pages/listagem/professor', compact('professores'));
     }

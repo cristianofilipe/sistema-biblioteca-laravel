@@ -11,12 +11,13 @@
 
     <div class="login-container">
         <form action="{{ route('login-auth') }}" method="post" class="login-form">
-            @if (session()->has('erro'))
-                <p>{{ session()->get('erro') }}</p>
-            @endif
             @csrf
             <img src="{{ asset('/img/ipddf-logo.png') }}" alt="" class="logo">
             <span class="slogan">"Criados para educar, formados para servir"</span>
+
+            @if (session()->has('erro'))
+                <p style="color: #000; background-color: red;">{{ session()->get('erro') }}</p>
+            @endif
             <div class="input-group">
                 <span class="fa fa-envelope"></span>
                 <input type="text" placeholder="E-mail" name="email">

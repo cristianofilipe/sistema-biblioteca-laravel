@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Emprestimo;
 use App\Models\Material;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $totalMaterial = Material::count();
+        $total = [
+            'material' => Material::count(),
+            'emprestimos' => Emprestimo::count(),
+            'relatorios' => 0,
+            'funcionarios' => 0
+        ];
         
-        return view('pages/home', compact('totalMaterial'));
+        return view('pages/home', compact('total'));
     }
 }

@@ -5,6 +5,7 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('/css/pages.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 @endpush
 
 @section('content')
@@ -82,6 +83,7 @@
             <div class="list'container">
                 <table>
                     <thead>
+                        <th>ID</th>
                         <th>Titulo</th>
                         <th>Volume</th>
                         <th>Ano de publicacao</th>
@@ -92,6 +94,7 @@
                     <tbody>
                         @foreach($livros as $livro)
                             <tr>
+                                <td>{{ $livro->id_livro }}</td>
                                 <td>{{ Str::limit($livro->titulo, 15)}}</td>
                                 <td>{{ $livro->volume }}</td>
                                 <td>{{ $livro->ano_publicacao }}</td>
@@ -101,16 +104,11 @@
                                 <td><a href="{{ route('livro-edit', $livro->id_livro) }}" class="btn edit" role="button">Editar</a></td>
                                 <td>
                                     @can('acesso-autorizado')
-                                        <!-- Button trigger modal -->
-                                        <form action="{{ route('livro-destroy', $livro->id_livro) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn delete">Excluir</button>
-                                        </form>
-                                    @endcan
-                                    
+                                        <button type="button" class="btn delete" id="btnOpen">Excluir</button>
+                                    @endcan                
                                 </td>
                             </tr>
+                            <x-alert router="livro-destroy" idColumn="{{ $livro->id_livro }}" modalName="livro" />
                         @endforeach
                     </tbody>
                 </table>

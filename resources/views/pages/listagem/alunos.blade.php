@@ -17,15 +17,15 @@
             <div class="div-form">
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" class="form-input">
+                    <input type="text" name="nome" class="form-input" value="{{ old('nome') }}">
                 </div>
                 <div class="form-group">
                     <label for="classe">Classe</label>
-                    <input type="text" name="classe" class="form-input">
+                    <input type="text" name="classe" class="form-input" value="{{ old('classe') }}">
                 </div>
                 <div class="form-group">
                     <label for="turma">Turma</label>
-                    <input type="text" name="turma" class="form-input">
+                    <input type="text" name="turma" class="form-input" value="{{ old('turma') }}">
                 </div>
             </div>
 
@@ -45,7 +45,7 @@
 
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input type="text" name="telefone" class="form-input">
+                    <input type="text" name="telefone" class="form-input" value="{{ old('telefone') }}">
                 </div>
             </div>
 
@@ -86,16 +86,11 @@
                                 <td><a href="{{ route('aluno-edit', $aluno->id_aluno) }}" class="btn edit" role="button">Editar</a></td>
                                 <td>
                                     @can('acesso-autorizado')
-                                        <!-- Button trigger modal -->
-                                        <form action="{{ route('aluno-destroy', $aluno->id_aluno) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn delete">Excluir</button>
-                                        </form>
-                                    @endcan
-                                    
+                                        <button type="button" id="btnOpen" class="btn delete">Excluir</button>
+                                    @endcan                             
                                 </td>
                             </tr>
+                            <x-alert router="aluno-destroy" idColumn="{{ $aluno->id_aluno }}" modalName="Aluno" />
                         @endforeach
                     </tbody>
                 </table>

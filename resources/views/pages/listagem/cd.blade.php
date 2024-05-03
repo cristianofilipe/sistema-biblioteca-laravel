@@ -78,16 +78,12 @@
                                 <td><a href="{{ route('cd-edit', $cd->id_cd) }}" class="btn edit" role="button">Editar</a></td>
                                 <td>
                                     @can('acesso-autorizado')
-                                        <!-- Button trigger modal -->
-                                        <form action="{{ route('cd-destroy', $cd->id_cd) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn delete">Excluir</button>
-                                        </form>
-                                    @endcan
-                                    
+                                        <button type="button" id="btnOpen" class="btn delete">Excluir</button>
+                                    @endcan                                   
                                 </td>
                             </tr>
+
+                            <x-alert router="cd-destroy" idColumn="{{ $cd->id_cd }}" modalName="CD" />
                         @endforeach
                     </tbody>
                 </table>

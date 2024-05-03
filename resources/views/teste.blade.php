@@ -1,18 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Teste</title>
-</head>
-<body>
-    <div class="grupo">
+<h3>Relatorio - Livros</h3>
+
+    <style>
+        table {
+            widows: 80%;
+            border: 1px solid #000;
+            margin: auto;
+        }
+        thead, th{
+            background-color: gray;
+            border: 1px solid #fff;
+        }
+        tbody tr {
+            color: #000;
+            border: 1px solid #000;
+        }
+
+        .div-image {
+            position: relative;
+            left: 50%;
+        }
+
+        .div-image img {
+            width: 5rem;
+            height: 5rem;
+        }
         
-            <input type="text" name="autores[]" id="autores" class="form-input">
-            <button type="button" id="btnAdd">+</button>
-        
-    </div>
-    <script src="{{ asset('/js/form.js') }}"></script>
-</body>
-</html>
+    </style>
+
+<div class="div-image">
+    <img src="{{ asset('/img/ipddf-logo.png') }}" alt="">
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Editora</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Quem me dera ser onda</td>
+            <td>Independente</td>
+        </tr>
+        <tr>
+            <td>Haaaaaaaa</td>
+            <td>Cona da tua mae</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,3 +1,8 @@
+@php
+  use App\Models\Usuario;
+  $totalUsuarios = Usuario::count();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,7 +73,7 @@
               <a href="#">
                   <i class="fa fa-users"></i>
                   <h3>Usuários</h3>
-                  <span class="message-count">26</span>
+                  <span class="message-count">{{ $totalUsuarios }}</span>
               </a>
               <a href="{{ route('emprestimos') }}">
                   <i class="fa fa-handshake"></i>
@@ -78,7 +83,7 @@
                   <i class="fa fa-file-text"></i>
                   <h3>Relatório</h3>
               </a>
-              <a href="#" id="logout">
+              <a href="{{ route('logout') }}" id="logout">
                   <i class="fa fa-sign-out"></i>
                   <h3>Logout</h3>
               </a>

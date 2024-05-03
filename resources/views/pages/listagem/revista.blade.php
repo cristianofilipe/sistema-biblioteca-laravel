@@ -82,16 +82,11 @@
                                 <td><a href="{{ route('revista-edit', $revista->id_revista) }}" class="btn edit" role="button">Editar</a></td>
                                 <td>
                                     @can('acesso-autorizado')
-                                        <!-- Button trigger modal -->
-                                        <form action="{{ route('revista-destroy', $revista->id_revista) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn delete">Excluir</button>
-                                        </form>
-                                    @endcan
-                                    
+                                        <button type="button" class="btn delete" id="btnOpen">Excluir</button>
+                                    @endcan                
                                 </td>
                             </tr>
+                            <x-alert router="revista-destroy" idColumn="{{ $revista->id_revista }}" modalName="revista" />
                         @endforeach
                     </tbody>
                 </table>
