@@ -22,7 +22,7 @@ class TccFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tema' => ['required', 'min:10', "regex:/^(?!.*(<script>|<\/script>|onclick|onload)).*$/i"],
+            'tema' => ['required', 'min:10'],
             'orientador' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
             'autor' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
             'autores.*' => ['nullable', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],

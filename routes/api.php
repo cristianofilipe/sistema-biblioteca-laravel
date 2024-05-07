@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,5 @@ Route::get('/autors', function() {
 
     return response()->json($autores);
 });
+
+Route::get('/livros', [ApiController::class, 'livro_emprestimo']);

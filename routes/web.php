@@ -12,12 +12,7 @@ use App\Http\Controllers\Page\RelatorioController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\TccController;
-use App\Models\Autor;
-use App\Models\Livro;
 use App\Models\Usuario;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -33,8 +28,10 @@ use Illuminate\Support\Facades\Route;
 */
 
     Route::middleware('auth')->group(function() {
+        Route::get('/', [HomeController::class, 'index']);
         Route::get('home', [HomeController::class, 'index'])->name('home');
         Route::get('emprestimos', [EmprestimoController::class, 'index'])->middleware('can:acesso-autorizado')->name('emprestimos');
+        Route::patch('/emprestimo-devolucao/{id}', [EmprestimoController::class, 'devolucao'])->middleware('can:acesso-autorizado')->name('emprestimo-devolucao');
         Route::get('relatorios', [RelatorioController::class, 'index'])->name('relatorios');
 
 
@@ -47,6 +44,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('cadastro/cd', [CadastroController::class, 'cd'])->name('cadastro-cd');
         Route::get('cadastro/aluno', [CadastroController::class, 'aluno'])->name('cadastro-aluno');
         Route::get('cadastro/professor', [CadastroController::class, 'professor'])->name('cadastro-professor');
+        Route::get('cadastro/usuario', [CadastroController::class, 'usuario'])->middleware('can:acesso-autorizado')->name('cadastro-usuario');
 
         //Rotas para listagens
         Route::prefix('listagem')->group(function() {
@@ -56,6 +54,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('cd', [ListagemController::class, 'cd'])->name('listagem-cd');
             Route::get('alunos', [ListagemController::class, 'alunos'])->name('listagem-alunos');
             Route::get('professores', [ListagemController::class, 'professores'])->name('listagem-professores');
+            Route::get('usuarios', [ListagemController::class, 'usuarios'])->middleware('can:acesso-autorizado')->name('listagem-usuarios');
+            Route::get('consultas', [ListagemController::class, 'consultas'])->name('listagem-consultas');
         });
 
         
@@ -101,30 +101,29 @@ use Illuminate\Support\Facades\Route;
         Route::put('/professor/{id}', [ProfessorController::class, 'update'])->name('professor-update');
         Route::delete('/professor/{id}', [ProfessorController::class, 'destroy'])->name('professor-destroy');
 
+        //Rotas para os emprestimos
+        Route::post('/emprestimo', [EmprestimoController::class, 'store'])->middleware('can:acesso-autorizado')->name('emprestimo-store');
+        
+        //Rota para cadastrar um novo usuario
+        Route::post('/usuario/register', [LoginController::class, 'register'])->middleware('can:acesso-autorizado')->name('usuario-register');
+
     });
 
     Route::get('/login', [LoginController::class, 'index'])->withoutMiddleware('auth')->name('login');
     Route::post('/authenticate', [LoginController::class, 'auth'])->name('login-auth');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('/teste', function() {
+        $usuario = new Usuario();
+        $usuario->name = "Andre";
+        $usuario->email = "andre@gmail.com";
+        $usuario->tipo_usuario = "admin";
+        $usuario->password = Hash::make('ppttxx');
+        $usuario->save();
+
+        die("Bingooo");
+    });
    
     Route::view('/404', 'errors.404')->name('404');
     Route::view('/403', 'errors.403')->name('403');
-    Route::get('/teste', function(Usuario $user) {
-       $user->name = 'Afonsina';
-       $user->email = 'afonsina@gmail.com';
-       $user->tipo_usuario = 'admin';
-       $user->password = Hash::make('1234');
-       $user->save();
-
-       exit;
-    })->name('teste');
-
-    Route::get('/teste2', function() {
-        $senha = Illuminate\Support\Str::password(15, true, true, false);
-        echo $senha;
-        exit;
-        $livros = Livro::all(['titulo', 'editora'])->toArray();
-        $pdf = FacadePdf::loadView('teste');
-        //return view('teste');
-        return $pdf->download('relatorios.pdf');
-    });
+    

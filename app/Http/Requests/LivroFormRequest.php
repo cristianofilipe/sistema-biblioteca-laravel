@@ -26,14 +26,14 @@ class LivroFormRequest extends FormRequest
             'titulo' => ['required', 'min:5'],
             'volume' => ['required', 'regex:/^[0-9]+$/'],
             'ano_publicacao' => ['required', 'regex:/^[0-9]+$/'],
-            'edicao' => ['required', 'regex:/^(1st|2nd|3rd|[4-9]th|10th|[IVXLCDM]+)$/'],
+            'edicao' => ['required'],
             'editora' => ['required', 'regex:/^[A-Za-z0-9\s]+$/'],
             'modo_aquisicao' => ['required', "regex:/^[a-zA-Z]+$/"],
             'qtd_material' => ['required', "regex:/^[0-9]+$/"],
             'data_entrada' => ['required', "date", "before_or_equal:today"],
             'estante' => ['required', 'regex:/^[0-9]+$/'],
             'autor' => ['required', 'min:5' ,"regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
-            'autores.*' => ['nullable', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'autores.*' => ['nullable', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"]
         ];
     }
 

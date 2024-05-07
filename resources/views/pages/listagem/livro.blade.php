@@ -108,7 +108,9 @@
                                     @endcan                
                                 </td>
                             </tr>
-                            <x-alert router="livro-destroy" idColumn="{{ $livro->id_livro }}" modalName="livro" />
+                            <x-alert router="livro-destroy" idColumn="{{ $livro->id_livro }}" modalName="livro">
+                                <p>Tem certeza que deseja excluir o livro {{ $livro->titulo }}</p>
+                            </x-alert>
                         @endforeach
                     </tbody>
                 </table>

@@ -23,7 +23,7 @@ class CdFormRequest extends FormRequest
     {
         return [
             'capacidade' => ['required', 'numeric'],
-            'conteudo' => ['required', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
+            'conteudo' => ['required'],
             'modo_aquisicao' => ['required', "regex:/^[a-zA-Z]+$/"],
             'qtd_material' => ['required', "numeric"],
             'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"],

@@ -22,8 +22,8 @@ class RevistaFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titulo' => ['required', 'min:5', "regex:/^[a-zA-ZÀ-ÿ']+([\s][a-zA-ZÀ-ÿ']+)*$/"],
-            'subtitulo' => ['min:5', "regex:/^[0-9a-zA-ZÀ-ÿ']+([\s][0-9a-zA-ZÀ-ÿ']+)*$/"],
+            'titulo' => ['required', 'min:5'],
+            'subtitulo' => ['min:5'],
             'modo_aquisicao' => ['required', "regex:/^[a-zA-Z]+$/"],
             'qtd_material' => ['required', "regex:/^[0-9]+$/"],
             'data_entrada' => ['required', "regex:/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/"],

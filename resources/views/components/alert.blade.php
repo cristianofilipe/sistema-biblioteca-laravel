@@ -9,7 +9,7 @@
         <form action="{{ route($router, $idColumn) }}" method="post">
             @csrf
             @method('delete')
-            <p>Voce tem a certeza que deseja deletar o {{ $modalName }} {{ $idColumn }}</p>
+            {{ $slot }}
             <button type="submit" class="btn show">Deletar</button>
             <button id="btnClose" type="button" class="btn create">Cancelar</button>
         </form>

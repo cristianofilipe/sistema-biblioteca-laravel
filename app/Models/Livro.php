@@ -18,8 +18,7 @@ class Livro extends Model
         'edicao',
         'isbn',
         'editora',
-        'material_id',
-        'cdd'
+        'material_id'
     ];
 
     public function material()

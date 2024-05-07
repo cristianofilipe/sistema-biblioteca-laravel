@@ -17,9 +17,8 @@ return new class extends Migration
             $table->integer('volume');
             $table->year('ano_publicacao');
             $table->string('edicao');
-            $table->string('isbn');
+            $table->string('isbn')->unique();
             $table->string('editora');
-            $table->integer('cdd');
             $table->timestamps();
         });
     }

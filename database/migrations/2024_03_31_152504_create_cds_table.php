@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cds', function (Blueprint $table) {
             $table->id('id_cd');
-            $table->decimal('capacidade', 10, 2);
+            $table->decimal('capacidade');
             $table->string('conteudo');
             $table->timestamps();
         });

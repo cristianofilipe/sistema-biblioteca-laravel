@@ -20,11 +20,11 @@ class Emprestimo extends Model
 
     public function material()
     {
-        return $this->belongsTo(Material::class);
+        return $this->belongsTo(Material::class, 'material_id');
     }
 
-    public function usuario()
+    public function visitante()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(Visitante::class, 'visitante_id');
     }
 }

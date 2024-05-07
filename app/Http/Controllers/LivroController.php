@@ -53,7 +53,6 @@ class LivroController extends Controller
         $livro->edicao = $request->edicao;
         $livro->isbn = $request->isbn;
         $livro->editora = $request->editora;
-        $livro->cdd = 55;
         $livro->material_id = $material->id_material;
         $livro->save();
 

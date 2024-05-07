@@ -10,6 +10,7 @@ use App\Models\Livro;
 use App\Models\Professor;
 use App\Models\Revista;
 use App\Models\TCC;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class ListagemController extends Controller
@@ -198,7 +199,26 @@ class ListagemController extends Controller
     public function professores()
     {
         $professores = Professor::with('visitante.telefones', 'cursos')->get();
+        //dd($professores);
 
         return view('pages/listagem/professor', compact('professores'));
+    }
+
+    /**
+     * Listagem de todos os usuarios
+     */
+    public function usuarios()
+    {
+        $usuarios = Usuario::all(['name', 'email', 'tipo_usuario']);
+        //dd($usuarios);
+        return view('pages/listagem/usuarios', compact('usuarios'));
+    }
+
+    /**
+     * Listagem de todas as consultas
+     */
+    public function consultas()
+    {
+        return view('pages.listagem.consultas');
     }
 }

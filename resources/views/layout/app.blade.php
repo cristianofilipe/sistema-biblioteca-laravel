@@ -65,20 +65,25 @@
                   </div>
               </div>
 
-              <a href="#">
+              <a href="{{ route('listagem-consultas') }}">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <h3>Consultas</h3>
               </a>
+              @can('acesso-autorizado')
+                <a href="{{ route('listagem-usuarios') }}">
+                    <i class="fa fa-users"></i>
+                    <h3>Usuários</h3>
+                    <span class="message-count">{{ $totalUsuarios }}</span>
+                </a>
+              @endcan
 
-              <a href="#">
-                  <i class="fa fa-users"></i>
-                  <h3>Usuários</h3>
-                  <span class="message-count">{{ $totalUsuarios }}</span>
-              </a>
-              <a href="{{ route('emprestimos') }}">
+              @can('acesso-autorizado')
+                <a href="{{ route('emprestimos') }}">
                   <i class="fa fa-handshake"></i>
                   <h3>Empréstimo</h3>
-              </a>
+                </a>
+              @endcan
+              
               <a href="{{ route('relatorios') }}">
                   <i class="fa fa-file-text"></i>
                   <h3>Relatório</h3>
@@ -124,6 +129,7 @@
     </div>
     <!-- =================== END OF CONTAINER =================== -->
     <script src="{{ asset('/js/layout.js') }}"></script>
+    <script src="{{ asset('/js/logout.js') }}"></script>
 
     @stack('scripts')
   </body>

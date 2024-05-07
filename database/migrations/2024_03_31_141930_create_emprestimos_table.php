@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('emprestimos', function (Blueprint $table) {
             $table->id('id_emprestimo');
             $table->datetime('data_emprestimo');
-            $table->datetime('data_devolucao');
+            $table->datetime('data_devolucao')->nullable();
             $table->timestamps();
         });
     }

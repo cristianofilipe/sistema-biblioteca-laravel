@@ -50,5 +50,10 @@ class CadastroController extends Controller
     {
         return view('pages.cadastro.emprestimo');
     }
+
+    public function usuario()
+    {
+        return view('pages.cadastro.usuario');
+    }
     
 }
