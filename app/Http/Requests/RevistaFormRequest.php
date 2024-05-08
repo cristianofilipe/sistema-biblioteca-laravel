@@ -35,23 +35,23 @@ class RevistaFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'titulo.required' => 'O titulo eh obrigado',
+            'titulo.required' => 'O titulo é obrigado',
             'tiulo.min' => 'O titulo precisa no minimo de 5 caracteres',
             'titulo.regex' => 'Titulo invalido',
 
             'subtitulo.min' => 'O subtitulo precisa no minimo de 5 caracteres',
             'subtitulo.regex' => 'subtitulo invalido',
 
-            'modo_aquisicao.required' => 'O modo de aquisicao eh obrigatorio',
+            'modo_aquisicao.required' => 'O modo de aquisicao é obrigatorio',
             'modo_aquisicao.regex' => 'Modo de aquisicao invalido',
 
-            'qtd_material.required' => 'A quantidade eh obrigatorio', 
+            'qtd_material.required' => 'A quantidade é obrigatorio', 
             'qtd_material.regex' => 'Quantidade de material invalida',
 
-            'data_entrada.required' => 'Data de entrada eh obrigatorio',
+            'data_entrada.required' => 'Data de entrada é obrigatorio',
             'data_entrada.regex' => 'Data invalida',
 
-            'estante.required' => 'A estante eh obrigatoria',
+            'estante.required' => 'A estante é obrigatoria',
             'estante.regex' => 'Estante invalida'
         ];
     }

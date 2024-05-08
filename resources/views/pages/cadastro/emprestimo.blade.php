@@ -14,7 +14,7 @@
 
         @if (session('erro') || session('erro_emprestimo'))
             <div>
-                <span style="padding: 10px; color: #fff; background-color: red;">
+                <span style="padding: 5px; color: #fff; background-color: red;">
                     {{ session('erro') ?? session('erro_emprestimo') }}
                 </span>
             </div>
@@ -44,6 +44,9 @@
             <div class="form-group">
                 <label for="data_emprestimo">Data de emprestimos</label>
                 <input type="date" name="data_emprestimo" id="data_emprestimo" class="form-input" value="{{ old('data_emprestimo') }}">
+                @if ($errors->has('data_emprestimo'))
+                    <span style="color: red;">{{ $errors->first('data_emprestimo') }}</span>
+                @endif
             </div>
         </div>
 

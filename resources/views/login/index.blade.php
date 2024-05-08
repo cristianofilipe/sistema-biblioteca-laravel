@@ -16,7 +16,7 @@
             <span class="slogan">"Criados para educar, formados para servir"</span>
 
             @if (session()->has('erro'))
-                <p style="color: #000; background-color: red;">{{ session()->get('erro') }}</p>
+                <p style="color: red; ">{{ session()->get('erro') }}</p>
             @endif
             <div class="input-group">
                 <span class="fa fa-envelope"></span>
@@ -33,7 +33,6 @@
                     <p class="mg-error">{{ $errors->first('password') }}</p>
                 @endif
             </div>
-            <a href="#" class="forgot-password">Esqueceu a senha?</a>
             <button type="submit">Login</button>
         </form>
     </div>

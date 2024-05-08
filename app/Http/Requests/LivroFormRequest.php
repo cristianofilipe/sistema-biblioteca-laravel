@@ -40,10 +40,10 @@ class LivroFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute eh obrigatorio',
-            'regex' => ':attribute eh invalido',
+            'required' => ':attribute é obrigatorio',
+            'regex' => ':attribute é inválido',
             'titulo.min' => 'O titulo precisa no minimo 5 caracteres',
-            'data_entrada.before_or_equal' => "Data invalida" 
+            'data_entrada.before_or_equal' => "Data inválida" 
         ];
     }
 }

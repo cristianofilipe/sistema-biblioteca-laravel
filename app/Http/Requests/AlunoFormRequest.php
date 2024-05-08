@@ -34,14 +34,14 @@ class AlunoFormRequest extends FormRequest
     {
         return [
             'nome.required' => 'Insira o nome',
-            'nome.min'=>'digite um nome com mais letras',
+            'nome.min'=>'Digite um nome com mais letras',
             'nome.regex' => 'Nome invalido',
             'sexo.required' => 'Insira o sexo',
-            'sexo.regex' => 'sexo invalido',
+            'sexo.regex' => 'Sexo invalido',
             'classe.required' => 'Insira a classe',
             'classe.regex'=> 'classe invalida',
             'turma.required' => 'Insira a turma',
-            'turma.regex' => 'turma invalida',
+            'turma.regex' => 'Turma invalida',
             'curso.required' => 'Insira o curso',
             'curso.regex' => 'curso invalido'
         ];

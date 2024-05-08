@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+    //
     public function index()
     {
         if(Auth::check()) {

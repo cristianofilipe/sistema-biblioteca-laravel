@@ -55,7 +55,7 @@
                 <div class="middle">
                     <div class="left">
                         <h3>Total de Empréstimos</h3>
-                        <h1>{{ $total['emprestimos'] }}</h1>
+                        <h1>{{ $total['emprestimo'] }}</h1>
                     </div>
                 
                 </div>
@@ -67,8 +67,8 @@
                 <i class="fa fa-users"></i>
                 <div class="middle">
                     <div class="left">
-                        <h3>Total de Funcionários</h3>
-                        <h1>{{ $total['funcionarios'] }}</h1>
+                        <h3>Total de Visitantes</h3>
+                        <h1>{{ $total['visitante'] }}</h1>
                     </div>
                     
                 </div>
@@ -78,8 +78,8 @@
                 <i class="fa fa-file-text"></i>
                     <div class="middle">
                     <div class="left">
-                        <h3>Total de Relatórios</h3>
-                        <h1>{{ $total['relatorios'] }}</h1>
+                        <h3>Consulta</h3>
+                        <h1>{{ $total['consulta'] }}</h1>
                     </div>
                 </div>
               

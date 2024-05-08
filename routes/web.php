@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RevistaController;
 use App\Http\Controllers\TccController;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
@@ -112,17 +113,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('/login', [LoginController::class, 'index'])->withoutMiddleware('auth')->name('login');
     Route::post('/authenticate', [LoginController::class, 'auth'])->name('login-auth');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
-    Route::get('/teste', function() {
-        $usuario = new Usuario();
-        $usuario->name = "Andre";
-        $usuario->email = "andre@gmail.com";
-        $usuario->tipo_usuario = "admin";
-        $usuario->password = Hash::make('ppttxx');
-        $usuario->save();
-
-        die("Bingooo");
-    });
    
     Route::view('/404', 'errors.404')->name('404');
     Route::view('/403', 'errors.403')->name('403');

@@ -1,6 +1,10 @@
 @php
   use App\Models\Usuario;
+  use Illuminate\Support\Facades\Auth;
+
   $totalUsuarios = Usuario::count();
+  $usuarioLogado = Auth::getUser();
+
 @endphp
 
 <!DOCTYPE html>
@@ -115,11 +119,11 @@
           </div>
           <div class="profile">
             <div class="info">
-              <small class="text-muted">Admin</small>
+              <small class=""><strong>Login:</strong>
+                {{ $usuarioLogado->email }}
+              </small>
             </div>
-            <div class="profile-photo">
-                <span class="material-icons-sharp">person</span>
-            </div>
+         
           </div>
         </div>
         <!-- =================== END OF TOP =================== -->

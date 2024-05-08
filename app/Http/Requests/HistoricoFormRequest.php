@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfessorFormRequest extends FormRequest
+class HistoricoFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,22 +22,17 @@ class ProfessorFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => ['required', 'min:3'],
-            'email' => ['email'],
-            'genero' => ['required', "regex:/^[MF]$/"],
-            'tel.*' => ['nullable', 'regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/'],
-            'cursos' => ['required', 'array'],
-            'cursos.*' => ['exists:cursos,id_curso']
+            'nome' => ['required'],
+            'livro' => ['required'],
+            'tipo_visitante' => ['required', 'in:professor,aluno']
         ];
     }
 
     public function messages()
     {
         return [
-            'regex' => ':attribute inválido',
-            'required' => 'o campo :attribute é obrigatorio',
-            'email.email' => 'Email invalido',
-            'cursos.array' => 'Cursos invalidos'
+            'required' => 'O campo :attribute é obrigatório',
+            'tipo_visitante.in' => 'Tipo de visitante inválido'
         ];
     }
 }

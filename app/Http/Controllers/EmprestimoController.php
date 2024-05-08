@@ -26,16 +26,23 @@ class EmprestimoController extends Controller
     public function store(EmprestimoRequest $request)
     {
         //Verificar se o livro existe na tabela livros
-        if(!$livro = Livro::where('titulo', 'like', '%'. $request->titulo .'%')->first()) {
-            die("livro nao encontrado");
-            //return redirect()->back()->with('erro', 'Livro nao encontrado'); 
+        if(!$livro = Livro::with('material')->where('titulo', 'like', '%'. $request->titulo_livro .'%')->first()) {
+            //die("livro nao encontrado");
+            return redirect()->back()->with('erro', 'Livro nao encontrado'); 
+        }
+
+        //verificar se o livro esta disponivel para se fazer o emprestimo
+        if(!$livro->material->ativo) {
+            return redirect()->back()->with('erro', 'Livro nao disponivel para emprestimo');
         }
 
         //verificar se o professor existe na tabela professors
         if(!$professor = Visitante::where('nome', 'like', '%'. $request->nome_professor .'%')->first()) {
-            die("Visitante nao encontrado");
+            //die("Visitante nao encontrado");
             return redirect()->back()->with('erro', 'Professor nao encontrado');
         }
+
+        //dd($livro);
 
         //pegar a data actual
         $dataActual = now()->toDateString();
@@ -48,7 +55,7 @@ class EmprestimoController extends Controller
         //verifica se numero de emprestimos por e maior que 2
         if($numeroEmprestimos >= 2) {
             return redirect()->back()->with('erro_emprestimo', 'Este professor atingiu o seu limite de emprestimo por dia');
-        } 
+        }
 
         //Criar um novo emprestimo
         $emprestimo = new Emprestimo();
@@ -62,6 +69,20 @@ class EmprestimoController extends Controller
         //Data do emprestimo
         $emprestimo->data_emprestimo = $request->data_emprestimo;
 
+        //Reduzir a quantidade de materiais
+        $livro->material->update([
+            'qtd_material' => $livro->material->qtd_material -= 1
+        ]);
+
+        //Verificar se esta ativo
+        if($livro->material->qtd_material <= 2) {
+            $livro->material->update([
+                'ativo' => false
+            ]);
+        }
+
+        $livro->save();
+
         $emprestimo->save();
         
         return redirect()->route('emprestimos');
@@ -70,13 +91,25 @@ class EmprestimoController extends Controller
     //Metodo utilizado para a devolucao do livros
     public function devolucao(int $id)
     {
-        $emprestimo = Emprestimo::find($id);
+        $emprestimo = Emprestimo::with('material')->find($id);
 
-        //dd($emprestimo);
+        
         //atualizar o campo data de devolucao
         $emprestimo->update([
             'data_devolucao' => now()->toDateTimeString()
         ]);
+
+        //atualizar a quantidade de material
+        $emprestimo->material->update([
+            'qtd_material' => $emprestimo->material->qtd_material += 1
+        ]);
+
+        //verificar se o seu estado
+        if($emprestimo->material->qtd_material > 2) {
+            $emprestimo->material->update([
+                'ativo' => true
+            ]);
+        }
 
         return redirect()->route('emprestimos')->with('Devolucao feita com sucesso');
     }
